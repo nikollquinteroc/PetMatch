@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.petprueba"
+    namespace = "com.example.petmatch"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.petprueba"
+        applicationId = "com.example.petmatch"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

@@ -1,4 +1,4 @@
-package com.example.petprueba.ui.theme
+package com.example.petmatch.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

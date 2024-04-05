@@ -1,4 +1,4 @@
-package com.example.petprueba.ui.theme
+package com.example.petmatch.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun PetPruebaTheme(
+fun PetMatchTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
