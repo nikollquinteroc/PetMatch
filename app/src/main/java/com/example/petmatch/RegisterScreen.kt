@@ -6,13 +6,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.petmatch.ui.theme.PetMatchTheme
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.KeyboardType
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.petmatch.view.ui_theme.MyApp
 
 @Composable
 fun RegisterScreen() {
@@ -81,7 +81,7 @@ fun RegisterScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewRegisterScreen() {
-    PetMatchTheme {
+    MyApp {
         RegisterScreen()
     }
 }
