@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.googleService)
 }
 
 android {
@@ -52,7 +53,6 @@ android {
 dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
-    androidTestImplementation(composeBom)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
@@ -66,6 +66,17 @@ dependencies {
     implementation(libs.coil.kt.compose)
 
     implementation(libs.androidx.compose.ui.util)
+
+    implementation("androidx.compose.material:material-icons-extended:1.6.5")
+    implementation ("org.mindrot:jbcrypt:0.4")
+
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-auth")
+
+    implementation ("com.google.firebase:firebase-firestore-ktx:23.0.0")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

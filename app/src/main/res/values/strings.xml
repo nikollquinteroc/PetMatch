@@ -7,8 +7,7 @@
     <string name="home_cart">My Cart</string>
     <string name="home_profile">Profile</string>
 
-
-    <!-- Snack Detail -->
+    <!-- Pet Detail -->
     <string name="detail_header">Details</string>
     <string name="detail_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tempus, sem vitae convallis imperdiet, lectus nunc pharetra diam, ac rhoncus quam eros eu risus. Nulla pulvinar condimentum erat, pulvinar tempus turpis blandit ut. Etiam sed ipsum sed lacus eleifend hendrerit eu quis quam. Etiam ligula eros, finibus vestibulum tortor ac, ultrices accumsan dolor. Vivamus vel nisl a libero lobortis posuere. Aenean facilisis nibh vel ultrices bibendum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse ac est vitae lacus commodo efficitur at ut massa. Etiam vestibulum sit amet sapien sed varius. Aliquam non ipsum imperdiet, pulvinar enim nec, mollis risus. Fusce id tincidunt nisl.</string>
     <string name="services">Services</string>
@@ -20,5 +19,18 @@
     <string name="see_more">SEE MORE</string>
     <string name="see_less">SEE LESS</string>
 
-
+    <!-- Register -->
+    <string name="hey">Hey there, </string>
+    <string name="create">Create an Account </string>
+    <string name="welcome">Welcome back </string>
+    <string name="first">First Name </string>
+    <string name="last">Last Name </string>
+    <string name="email">Email </string>
+    <string name="password">Password </string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="terms_and_conditions">By continuing you accept our Privacy Policy and Term of Use</string>
+    <string name="register">Register</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
 </resources>
