@@ -1,4 +1,4 @@
-package com.example.petmatch.view.screens.caretakerdetail
+package com.example.petmatch.view.screens.petdetail
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ScrollState
@@ -16,21 +16,15 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -49,17 +43,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.util.lerp
 import com.example.petmatch.R
-import com.example.petmatch.model.Caretaker
-import com.example.petmatch.model.CaretakerCollection
-import com.example.petmatch.model.CaretakerRepo
-import com.example.petmatch.view.components.CaretakerCollection
-import com.example.petmatch.view.components.CaretakerImage
+import com.example.petmatch.model.Pet
+import com.example.petmatch.model.PetCollection
+import com.example.petmatch.model.PetRepo
+import com.example.petmatch.view.components.PetCollection
+import com.example.petmatch.view.components.PetImage
 import com.example.petmatch.view.components.PetMatchButton
 import com.example.petmatch.view.components.PetMatchDivider
 import com.example.petmatch.view.components.PetMatchSurface
+import com.example.petmatch.view.components.Up
+import com.example.petmatch.view.navigation.MainDestinations
 import com.example.petmatch.view.ui_theme.PetMatchTheme
-import com.example.petmatch.view.ui_theme.md_theme_light_shadow
-import com.example.petmatch.view.utils.mirroringBackIcon
 import kotlin.math.max
 import kotlin.math.min
 
@@ -76,29 +70,28 @@ private val CollapsedImageSize = 150.dp
 private val HzPadding = Modifier.padding(horizontal = 24.dp)
 
 @Composable
-fun CaretakerDetail(
-    caretakerId: Long,
-    upPress: () -> Unit
+fun PetDetail(
+    petId: Long,
+    upPress: () -> Unit,
+    onNavigateToRoute: (String) -> Unit
 ) {
-    val caretaker = remember(caretakerId) { CaretakerRepo.getCaretaker(caretakerId) }
-    val related = remember(caretakerId) { CaretakerRepo.getRelated(caretakerId) }
-    var selectedCount by remember { mutableIntStateOf(0) }
+    val pet = remember(petId) { PetRepo.getPet(petId) }
+    val related = remember(petId) { PetRepo.getRelated(petId) }
 
     Box(Modifier.fillMaxSize()) {
         val scroll = rememberScrollState(0)
         Header()
         Body(
             related = related,
-            scroll = scroll,
-            caretaker = caretaker,
-            onSelectedCountChanged = { count ->
-                selectedCount = count
-            }
+            scroll = scroll
         )
-        Title(caretaker = caretaker) { scroll.value}
-        Image(imageUrl = caretaker.imageUrl) { scroll.value }
+        Title(pet = pet) { scroll.value }
+        Image(imageUrl = pet.imageUrl) { scroll.value }
         Up(upPress)
-        CartBottomBar(modifier = Modifier.align(Alignment.BottomCenter))
+        DetailBottomBar(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            onNavigateToRoute = onNavigateToRoute
+        )
     }
 }
 
@@ -121,33 +114,9 @@ private fun Header() {
 }
 
 @Composable
-private fun Up(upPress: () -> Unit) {
-    IconButton(
-        onClick = upPress,
-        modifier = Modifier
-            .statusBarsPadding()
-            .padding(horizontal = 16.dp, vertical = 10.dp)
-            .size(36.dp)
-            .background(
-                color = md_theme_light_shadow.copy(alpha = 0.3f),
-                shape = CircleShape
-            )
-    ) {
-        Icon(
-            imageVector = mirroringBackIcon(),
-            tint = MaterialTheme.colorScheme.primaryContainer,
-            contentDescription = stringResource(id = R.string.label_back)
-        )
-    }
-}
-
-@Composable
 private fun Body(
-    related: List<CaretakerCollection>,
-    scroll: ScrollState,
-    caretaker: Caretaker,
-    onSelectedCountChanged: (Int) -> Unit,
-
+    related: List<PetCollection>,
+    scroll: ScrollState
 ) {
     Column {
         Spacer(
@@ -201,26 +170,13 @@ private fun Body(
                             }
                     )
                     Spacer(modifier = Modifier.height(40.dp))
-                    Text(
-                        text = stringResource(id = R.string.services),
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = HzPadding
-                    )
-                    Spacer(modifier =  Modifier.height(4.dp))
-                    ChecklistServices(
-                        caretaker = caretaker,
-                        onSelectedCountChanged = onSelectedCountChanged
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
                     PetMatchDivider()
 
                     related.forEach { caretakerCollection ->
                         key(caretakerCollection.id) {
-                            CaretakerCollection(
-                                caretakerCollection = caretakerCollection,
-                                onCaretakerClick = { },
+                            PetCollection(
+                                petCollection = caretakerCollection,
+                                onPetClick = { },
                                 highlight = false
                             )
                         }
@@ -239,71 +195,9 @@ private fun Body(
 }
 
 @Composable
-fun ChecklistServices(
-    caretaker: Caretaker,
-    onSelectedCountChanged: (Int) -> Unit
-) {
-    var selectedCount by remember { mutableIntStateOf(0) }
-    Column {
-        caretaker.service.forEach {service ->
-            TextChecklistItem(
-                serviceTitle = service.title,
-                onCheckedChange = {isChecked ->
-                    selectedCount += if (isChecked) 1 else -1
-                    onSelectedCountChanged(selectedCount)
-                },
-                servicePrice = service.price
-            )
-        }
-    }
-}
-
-@Composable
-fun TextChecklistItem(
-    serviceTitle: String,
-    servicePrice: Long,
-    onCheckedChange: (Boolean) -> Unit
-) {
-    var checkedState by remember { mutableStateOf(false) }
-    Row(
-        modifier = HzPadding.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Checkbox(
-            checked = checkedState,
-            onCheckedChange = { isChecked ->
-                checkedState = isChecked
-                onCheckedChange(isChecked)
-            },
-        )
-        Text(
-            text = serviceTitle,
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = HzPadding
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            Text(
-                text = "$ $servicePrice",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = HzPadding
-            )
-        }
-    }
-}
-
-@Composable
-private fun Title(caretaker: Caretaker, scrollProvider: () -> Int) {
-    val maxOffset = with(LocalDensity.current) { MaxTitleOffset.toPx()}
-    val minOffset = with(LocalDensity.current) { MinTitleOffset.toPx()}
+private fun Title(pet: Pet, scrollProvider: () -> Int) {
+    val maxOffset = with(LocalDensity.current) { MaxTitleOffset.toPx() }
+    val minOffset = with(LocalDensity.current) { MinTitleOffset.toPx() }
 
     Column(
         verticalArrangement = Arrangement.Bottom,
@@ -319,13 +213,13 @@ private fun Title(caretaker: Caretaker, scrollProvider: () -> Int) {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = caretaker.name,
+            text = pet.name,
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.secondary,
             modifier = HzPadding
         )
         Text(
-            text = caretaker.description,
+            text = pet.tag,
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary,
             modifier = HzPadding
@@ -350,7 +244,7 @@ private fun Image(
         collapseFractionProvider = collapseFractionProvider,
         modifier = HzPadding.statusBarsPadding()
     ) {
-        CaretakerImage(
+        PetImage(
             imageUrl = imageUrl,
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
@@ -369,7 +263,7 @@ private fun CollapsingImageLayout(
     Layout(
         modifier = modifier,
         content = content
-    ) {measurables, constraints ->
+    ) { measurables, constraints ->
         check(measurables.size == 1)
 
         val collapseFraction = collapseFractionProvider()
@@ -388,7 +282,7 @@ private fun CollapsingImageLayout(
         layout(
             width = constraints.maxWidth,
             height = imageY + imageWidth
-        ){
+        ) {
             imagePlaceable.placeRelative(imageX, imageY)
         }
     }
@@ -396,7 +290,10 @@ private fun CollapsingImageLayout(
 
 
 @Composable
-private fun CartBottomBar(modifier: Modifier = Modifier) {
+private fun DetailBottomBar(
+    modifier: Modifier = Modifier,
+    onNavigateToRoute: (String) -> Unit
+) {
     PetMatchSurface(modifier = modifier) {
         Column {
             PetMatchDivider()
@@ -407,20 +304,37 @@ private fun CartBottomBar(modifier: Modifier = Modifier) {
                     .then(HzPadding)
                     .heightIn(min = BottomBarHeight)
             ) {
-                Spacer(modifier = Modifier.width(16.dp))
-                PetMatchButton(
-                    onClick = { /*TODO*/ },
+                DetailBottomBarItem(
+                    onBottomClick = { onNavigateToRoute(MainDestinations.MAP) },
+                    bottomTitle = R.string.view_on_map_bottom,
                     modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.add_to_cart),
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        maxLines = 1
-                    )
-                }
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                DetailBottomBarItem(
+                    onBottomClick = { onNavigateToRoute(MainDestinations.INFO_CONTACT_ROUTE) },
+                    bottomTitle = R.string.adopt_bottom,
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
+    }
+}
+
+@Composable
+private fun DetailBottomBarItem(
+    modifier: Modifier = Modifier,
+    onBottomClick: () -> Unit,
+    bottomTitle: Int
+) {
+    PetMatchButton(
+        onClick = onBottomClick,
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(bottomTitle),
+            textAlign = TextAlign.Center,
+            maxLines = 1
+        )
     }
 }
 
@@ -429,9 +343,10 @@ private fun CartBottomBar(modifier: Modifier = Modifier) {
 @Composable
 private fun CaretakerDetailPreview() {
     PetMatchTheme {
-        CaretakerDetail(
-            caretakerId = 1L,
-            upPress = { }
+        PetDetail(
+            petId = 1L,
+            upPress = { },
+            onNavigateToRoute = {}
         )
     }
 }

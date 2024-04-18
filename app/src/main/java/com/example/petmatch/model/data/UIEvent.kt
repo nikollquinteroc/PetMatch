@@ -1,4 +1,4 @@
-package com.example.petmatch.view.data
+package com.example.petmatch.model.data
 
 sealed class UIEvent {
     data class  FirstNameChanged(val firstName:String) : UIEvent()

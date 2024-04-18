@@ -1,4 +1,4 @@
-package com.example.petmatch.view.screens
+package com.example.petmatch.view.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.petmatch.R
-import com.example.petmatch.view.components.PetMatchDivider
 import com.example.petmatch.view.ui_theme.PetMatchTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

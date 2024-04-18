@@ -52,9 +52,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.example.petmatch.R
-import com.example.petmatch.ui.theme.Primary
-import com.example.petmatch.ui.theme.Secondary
-import com.example.petmatch.ui.theme.TextColor
+import com.example.petmatch.view.ui_theme.theme.Primary
+import com.example.petmatch.view.ui_theme.theme.Secondary
+import com.example.petmatch.view.ui_theme.theme.TextColor
 @Composable
 fun MyImageComponent(painter: Painter) {
     Image(
@@ -228,7 +228,8 @@ fun DividerText2(){
             modifier = Modifier.padding(8.dp),
             text = "or",
             fontSize = 18.sp,
-            color = TextColor)
+            color = TextColor
+        )
 
         Divider(modifier = Modifier
             .fillMaxWidth()

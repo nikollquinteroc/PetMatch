@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -44,10 +43,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.petmatch.R
-import com.example.petmatch.model.Caretaker
-import com.example.petmatch.model.CaretakerCollection
+import com.example.petmatch.model.Pet
+import com.example.petmatch.model.PetCollection
 import com.example.petmatch.model.CollectionType
-import com.example.petmatch.model.caretakers
+import com.example.petmatch.model.pets
 import com.example.petmatch.view.ui_theme.PetMatchTheme
 import com.example.petmatch.view.utils.mirroringIcon
 
@@ -58,9 +57,9 @@ private val Density.cardWidthWithPaddingPx
     get() = (HighlightCardWidth + HighlightCardPadding).toPx()
 
 @Composable
-fun CaretakerCollection(
-    caretakerCollection: CaretakerCollection,
-    onCaretakerClick: (Long) -> Unit,
+fun PetCollection(
+    petCollection: PetCollection,
+    onPetClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     index: Int = 0,
     highlight: Boolean = true
@@ -73,7 +72,7 @@ fun CaretakerCollection(
                 .padding(start = 24.dp)
         ) {
             Text(
-                text = caretakerCollection.name,
+                text = petCollection.name,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
@@ -95,26 +94,26 @@ fun CaretakerCollection(
                 )
             }
         }
-        if (highlight && caretakerCollection.type == CollectionType.Highlight) {
-            HighlightedCaretakers(
+        if (highlight && petCollection.type == CollectionType.Highlight) {
+            HighlightedPets(
                 index = index,
-                caretakers = caretakerCollection.caretakers,
-                onCaretakerClick = onCaretakerClick
+                pets = petCollection.pets,
+                onPetClick = onPetClick
             )
         } else {
-            Caretakers(
-                caretakers = caretakerCollection.caretakers,
-                onCaretakerClick = onCaretakerClick
+            Pets(
+                pets = petCollection.pets,
+                onPetClick = onPetClick
             )
         }
     }
 }
 
 @Composable
-private fun HighlightedCaretakers(
+private fun HighlightedPets(
     index: Int,
-    caretakers: List<Caretaker>,
-    onCaretakerClick: (Long) -> Unit,
+    pets: List<Pet>,
+    onPetClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val rowState = rememberLazyListState()
@@ -140,10 +139,10 @@ private fun HighlightedCaretakers(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(start = 24.dp, end = 24.dp)
     ) {
-        itemsIndexed(caretakers) {index, caretaker ->
-            HighlightCaretakerItem(
-                caretaker = caretaker,
-                onCaretakerClick = onCaretakerClick,
+        itemsIndexed(pets) { index, caretaker ->
+            HighlightPetItem(
+                pet = caretaker,
+                onPetClick = onPetClick,
                 index = index,
                 gradient = gradient,
                 scrollProvider = scrollProvider
@@ -153,28 +152,28 @@ private fun HighlightedCaretakers(
 }
 
 @Composable
-private fun Caretakers(
-    caretakers: List<Caretaker>,
-    onCaretakerClick: (Long) -> Unit,
+private fun Pets(
+    pets: List<Pet>,
+    onPetClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
         modifier = modifier,
         contentPadding = PaddingValues(start = 12.dp, end = 12.dp)
     ) {
-        items(caretakers) {caretaker ->
-            CaretakerItem(
-                caretaker = caretaker,
-                onCaretakerClick = onCaretakerClick
+        items(pets) { caretaker ->
+            PetItem(
+                pet = caretaker,
+                onPetClick = onPetClick
             )
         }
     }
 }
 
 @Composable
-fun CaretakerItem(
-    caretaker: Caretaker,
-    onCaretakerClick: (Long) -> Unit,
+fun PetItem(
+    pet: Pet,
+    onPetClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     PetMatchSurface(
@@ -188,17 +187,17 @@ fun CaretakerItem(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .clickable(onClick = { onCaretakerClick(caretaker.id) })
+                .clickable(onClick = { onPetClick(pet.id) })
                 .padding(8.dp)
         ) {
-            CaretakerImage(
-                imageUrl = caretaker.imageUrl,
+            PetImage(
+                imageUrl = pet.imageUrl,
                 elevation = 4.dp,
                 contentDescription = null,
                 modifier = Modifier.size(120.dp)
             )
             Text(
-                text = caretaker.name,
+                text = pet.name,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(top = 8.dp)
@@ -208,9 +207,9 @@ fun CaretakerItem(
 }
 
 @Composable
-private fun HighlightCaretakerItem(
-    caretaker: Caretaker,
-    onCaretakerClick: (Long) -> Unit,
+private fun HighlightPetItem(
+    pet: Pet,
+    onPetClick: (Long) -> Unit,
     index: Int,
     gradient: List<Color>,
     scrollProvider: () -> Float,
@@ -226,7 +225,7 @@ private fun HighlightCaretakerItem(
     ) {
         Column(
             modifier = Modifier
-                .clickable(onClick = { onCaretakerClick(caretaker.id) })
+                .clickable(onClick = { onPetClick(pet.id) })
                 .fillMaxSize()
         ) {
             Box(
@@ -250,8 +249,8 @@ private fun HighlightCaretakerItem(
                             }
                         )
                 )
-                CaretakerImage(
-                    imageUrl = caretaker.imageUrl,
+                PetImage(
+                    imageUrl = pet.imageUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .size(120.dp)
@@ -260,7 +259,7 @@ private fun HighlightCaretakerItem(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = caretaker.name,
+                text = pet.name,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.headlineSmall,
@@ -269,7 +268,7 @@ private fun HighlightCaretakerItem(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = caretaker.description,
+                text = pet.description,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(horizontal = 16.dp)
@@ -279,7 +278,7 @@ private fun HighlightCaretakerItem(
 }
 
 @Composable
-fun CaretakerImage(
+fun PetImage(
     imageUrl: String,
     contentDescription: String?,
     modifier: Modifier = Modifier,
@@ -297,7 +296,7 @@ fun CaretakerImage(
                 .crossfade(true)
                 .build(), 
             contentDescription = contentDescription,
-            placeholder = painterResource(id = R.drawable.avatar),
+            placeholder = painterResource(id = R.drawable.mark_pet),
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
@@ -307,11 +306,11 @@ fun CaretakerImage(
 @Preview(name = "default")
 @Preview(name = "dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun CaretakerCardPreview() {
+fun PetCardPreview() {
     PetMatchTheme {
-        val caretaker = caretakers.first()
-        HighlightCaretakerItem(
-            caretaker,
+        val pet = pets.first()
+        HighlightPetItem(
+            pet,
             {},
             0,
             mutableListOf(

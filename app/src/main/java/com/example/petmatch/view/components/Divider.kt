@@ -17,7 +17,7 @@ import com.example.petmatch.view.ui_theme.PetMatchTheme
 @Composable
 fun PetMatchDivider(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.secondary,
+    color: Color = MaterialTheme.colorScheme.outlineVariant,
     thickness: Dp = 1.dp
 ) {
     HorizontalDivider(

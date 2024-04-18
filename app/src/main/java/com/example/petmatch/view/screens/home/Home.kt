@@ -1,6 +1,7 @@
 package com.example.petmatch.view.screens.home
 
 import android.content.res.Configuration
+import android.location.Location
 import androidx.annotation.FloatRange
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
@@ -45,31 +46,38 @@ import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.example.petmatch.model.pets
 import com.example.petmatch.view.components.PetMatchSurface
-import com.example.petmatch.view.screens.home.cart.Cart
+import com.example.petmatch.view.navigation.MainDestinations
 import com.example.petmatch.view.screens.home.feed.Feed
+import com.example.petmatch.view.screens.home.map.MyMap
 import com.example.petmatch.view.screens.home.profile.Profile
+import com.example.petmatch.view.screens.contact.InfoContact
 import com.example.petmatch.view.ui_theme.PetMatchTheme
 import com.example.petmatch.view.ui_theme.Shapes
 import java.util.Locale
 
 
 fun NavGraphBuilder.addHomeGraph(
-    onCaretakerSelected: (Long, NavBackStackEntry) -> Unit,
+    onPetSelected: (Long, NavBackStackEntry) -> Unit,
     onNavigateToRoute: (String) -> Unit,
+    lastKnownLocation: Location?,
+    upPress: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     composable(HomeSections.FEED.route) { from ->
         Feed(
-            onCaretakerClick = { id -> onCaretakerSelected(id, from) },
+            onPetClick = { id -> onPetSelected(id, from) },
             onNavigateToRoute = onNavigateToRoute,
             modifier = modifier
         )
     }
-    composable(HomeSections.CART.route) { from ->
-        Cart(
-            onCaretakerClick = { id -> onCaretakerSelected(id, from) },
+    composable(HomeSections.LOCATION.route) {
+        MyMap(
+            pets = pets,
             onNavigateToRoute = onNavigateToRoute,
+            lastKnownLocation = lastKnownLocation,
+            upPress = upPress,
             modifier = modifier
         )
     }
@@ -79,6 +87,13 @@ fun NavGraphBuilder.addHomeGraph(
             modifier = modifier
         )
     }
+    composable(MainDestinations.INFO_CONTACT_ROUTE) {
+        InfoContact(
+            upPress = upPress,
+            modifier = modifier
+        )
+    }
+
 }
 
 @Composable
@@ -235,7 +250,11 @@ fun PetMatchBottomNavigationItem(
     animSpec: AnimationSpec<Float>,
     modifier: Modifier = Modifier
 ) {
-    val animationProgress by animateFloatAsState(if (selected) 1f else 0f, animSpec, label = "Section_home")
+    val animationProgress by animateFloatAsState(
+        if (selected) 1f else 0f,
+        animSpec,
+        label = "Section_home"
+    )
     PetMatchBottomNavItemLayout(
         icon = icon,
         text = text,

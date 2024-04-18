@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleService)
+    alias(libs.plugins.mapsplugin)
 }
 
 android {
@@ -51,32 +52,34 @@ android {
 }
 
 dependencies {
+    implementation(libs.google.firebase.firestore)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewModelCompose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.ui.util)
     implementation(libs.coil.kt.compose)
 
-    implementation(libs.androidx.compose.ui.util)
+    implementation(platform(libs.firebase.bom))
+
 
     implementation("androidx.compose.material:material-icons-extended:1.6.5")
     implementation ("org.mindrot:jbcrypt:0.4")
-
-    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-auth")
 
-    implementation ("com.google.firebase:firebase-firestore-ktx:23.0.0")
-
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-
+    //Map
+    implementation(libs.google.maps)
+    implementation(libs.google.play.services)
+    implementation(libs.google.play.services.location)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

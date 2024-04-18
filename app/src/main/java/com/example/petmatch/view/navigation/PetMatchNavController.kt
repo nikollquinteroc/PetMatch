@@ -8,14 +8,17 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.petmatch.model.Pet
 
 /**
  * Destinations used in [PetMatchApp]
  */
 object MainDestinations {
     const val HOME_ROUTE = "home"
-    const val CARE_TAKER_DETAIL_ROUTE = "caretaker"
-    const val CARE_TAKER_ID_KEY = "caretakerId"
+    const val PET_DETAIL_ROUTE = "pet"
+    const val INFO_CONTACT_ROUTE = "info_contact"
+    const val MAP = "map"
+    const val PET_ID_KEY = "petId"
 }
 
 @Composable
@@ -38,21 +41,29 @@ class PetMatchNavController(
 
     fun navigateToBottomBarRoute(route: String) {
         if (route != currentRoute) {
-            navController.navigate(route) {
-                launchSingleTop = true
-                restoreState = true
+            if (route == MainDestinations.INFO_CONTACT_ROUTE) {
+                navController.navigate(route)
+            } else {
+                navController.navigate(route) {
+                    launchSingleTop = true
+                    restoreState = true
 
-                popUpTo(findStartDestination(navController.graph).id) {
-                    saveState = true
+                    popUpTo(findStartDestination(navController.graph).id) {
+                        saveState = true
+                    }
                 }
             }
         }
     }
 
-    fun navigateToCaretakerDetail(caretakerId: Long, from: NavBackStackEntry) {
+    fun navigateToPetDetail(petId: Long, from: NavBackStackEntry) {
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.CARE_TAKER_DETAIL_ROUTE}/$caretakerId")
+            navController.navigate("${MainDestinations.PET_DETAIL_ROUTE}/$petId")
         }
+    }
+
+    fun navigateToMap(petId: Long) {
+        navController.navigate("${MainDestinations.MAP}/${petId}")
     }
 
 }

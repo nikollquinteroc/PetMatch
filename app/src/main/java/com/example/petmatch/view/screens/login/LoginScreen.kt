@@ -1,4 +1,4 @@
-package com.example.petmatch.view.screens
+package com.example.petmatch.view.screens.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,8 +25,8 @@ import com.example.petmatch.view.components.HeadingTextComponent
 import com.example.petmatch.view.components.MyImageComponent
 import com.example.petmatch.view.components.MyTextFieldComponent
 import com.example.petmatch.view.components.PasswordFieldComponent
-import com.example.petmatch.view.data.LoginViewModel
-import com.example.petmatch.view.data.rules.LoginUIEvent
+import com.example.petmatch.model.data.LoginViewModel
+import com.example.petmatch.model.data.rules.LoginUIEvent
 
 // @Composable
 // fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {

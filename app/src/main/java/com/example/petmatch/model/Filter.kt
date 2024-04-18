@@ -12,9 +12,3 @@ class Filter(
 ) {
     val enabled = mutableStateOf(enabled)
 }
-
-val filters = listOf(
-    Filter(name = "Bathe"),
-    Filter(name = "Walk"),
-    Filter(name = "Home Care")
-)
