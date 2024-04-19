@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.petmatch.R
 
- 
+
 @Composable
 fun DetailsUserScreen() {
 
