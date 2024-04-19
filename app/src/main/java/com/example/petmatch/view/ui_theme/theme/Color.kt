@@ -1,4 +1,4 @@
-package com.example.petmatch.ui.theme
+package com.example.petmatch.view.ui_theme.theme
 
 import androidx.compose.ui.graphics.Color
 

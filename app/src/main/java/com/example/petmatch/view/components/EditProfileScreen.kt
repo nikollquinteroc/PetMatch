@@ -37,7 +37,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.petmatch.R
-import com.example.petmatch.ui.theme.Primary
+import com.example.petmatch.view.ui_theme.theme.Primary
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource

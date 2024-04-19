@@ -1,4 +1,4 @@
-package com.example.petmatch.view.data.rules
+package com.example.petmatch.model.data.rules
 
 data class LoginUIState(
     var email : String = "",

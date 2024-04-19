@@ -13,27 +13,32 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.petmatch.model.CaretakerCollection
-import com.example.petmatch.model.CaretakerRepo
-import com.example.petmatch.view.components.CaretakerCollection
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.petmatch.model.PetCollection
+import com.example.petmatch.model.PetRepo
+import com.example.petmatch.view.components.PetCollection
 import com.example.petmatch.view.components.PetMatchDivider
 import com.example.petmatch.view.components.PetMatchSurface
-import com.example.petmatch.view.screens.PetMatchTopAppBar
+import com.example.petmatch.view.components.PetMatchTopAppBar
 import com.example.petmatch.view.screens.home.HomeSections
 import com.example.petmatch.view.screens.home.PetMatchBottomBar
 import com.example.petmatch.view.ui_theme.PetMatchTheme
 
 @Composable
 fun Feed(
-    onCaretakerClick: (Long) -> Unit,
+    onPetClick: (Long) -> Unit,
     onNavigateToRoute: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: FeedViewModel = viewModel(factory = FeedViewModel.provideFactory())
 ) {
-    val caretakerCollections = remember { CaretakerRepo.getCaretakers() }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val petCollections = remember { PetRepo.getPets() }
     Scaffold(
         bottomBar = {
             PetMatchBottomBar(
@@ -45,8 +50,8 @@ fun Feed(
         modifier = modifier
     ) { paddingValues ->
         Feed(
-            caretakerCollections = caretakerCollections,
-            onCaretakerClick = onCaretakerClick,
+            petCollections = petCollections,
+            onPetClick = onPetClick,
             modifier = Modifier.padding(paddingValues)
         )
     }
@@ -54,15 +59,15 @@ fun Feed(
 
 @Composable
 private fun Feed(
-    caretakerCollections: List<CaretakerCollection>,
-    onCaretakerClick: (Long) -> Unit,
+    petCollections: List<PetCollection>,
+    onPetClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     PetMatchSurface(modifier = modifier.fillMaxSize()) {
         Box {
             CaretakerCollectionList(
-                caretakerCollections = caretakerCollections,
-                onCaretakerClick = onCaretakerClick
+                petCollections = petCollections,
+                onPetClick = onPetClick
             )
             PetMatchTopAppBar()
         }
@@ -71,8 +76,8 @@ private fun Feed(
 
 @Composable
 private fun CaretakerCollectionList(
-    caretakerCollections: List<CaretakerCollection>,
-    onCaretakerClick: (Long) -> Unit,
+    petCollections: List<PetCollection>,
+    onPetClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier) {
@@ -85,14 +90,14 @@ private fun CaretakerCollectionList(
                     )
                 )
             }
-            itemsIndexed(caretakerCollections) {index, caretakerCollection ->
+            itemsIndexed(petCollections) { index, petCollection ->
                 if (index > 0) {
                     PetMatchDivider(thickness = 2.dp)
                 }
 
-                 CaretakerCollection(
-                    caretakerCollection =caretakerCollection,
-                    onCaretakerClick = onCaretakerClick,
+                PetCollection(
+                    petCollection = petCollection,
+                    onPetClick = onPetClick,
                     index = index
                 )
             }
@@ -107,7 +112,7 @@ private fun CaretakerCollectionList(
 fun HomePreview() {
     PetMatchTheme {
         Feed(
-            onCaretakerClick = {},
+            onPetClick = {},
             onNavigateToRoute = {}
         )
     }

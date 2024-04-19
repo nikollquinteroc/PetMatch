@@ -1,11 +1,11 @@
-package com.example.petmatch.view.data
+package com.example.petmatch.model.data
 
 
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.petmatch.view.data.rules.Validator
+import com.example.petmatch.model.data.rules.Validator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.runtime.mutableStateOf

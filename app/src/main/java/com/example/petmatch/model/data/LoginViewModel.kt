@@ -1,11 +1,11 @@
-package com.example.petmatch.view.data
+package com.example.petmatch.model.data
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.petmatch.view.data.rules.LoginUIEvent
-import com.example.petmatch.view.data.rules.LoginUIState
-import com.example.petmatch.view.data.rules.Validator
+import com.example.petmatch.model.data.rules.LoginUIEvent
+import com.example.petmatch.model.data.rules.LoginUIState
+import com.example.petmatch.model.data.rules.Validator
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginViewModel : ViewModel() {
@@ -20,7 +20,7 @@ class LoginViewModel : ViewModel() {
 
     var loginInProgress = mutableStateOf(false)
 
-    fun onEvent(event:LoginUIEvent){
+    fun onEvent(event: LoginUIEvent){
         validateLoginUIDataWithRules()
         when(event){
             is LoginUIEvent.EmailChanged -> {

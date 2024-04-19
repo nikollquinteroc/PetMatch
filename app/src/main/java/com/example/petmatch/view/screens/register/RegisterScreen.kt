@@ -1,4 +1,4 @@
-package com.example.petmatch
+package com.example.petmatch.view.screens.register
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.petmatch.view.components.CheckboxComponent
@@ -29,9 +28,10 @@ import com.example.petmatch.view.components.PasswordFieldComponent
 import com.example.petmatch.view.components.RegisterTextComponent
 import com.example.petmatch.view.components.RoleDropdown
 import com.example.petmatch.view.components.btnRegister
-import com.example.petmatch.view.data.RegisterViewModel
+import com.example.petmatch.model.data.RegisterViewModel
 import androidx.compose.ui.platform.LocalContext
-import com.example.petmatch.view.data.UIEvent
+import com.example.petmatch.R
+import com.example.petmatch.model.data.UIEvent
 import com.example.petmatch.view.ui_theme.MyApp
 
 @Composable
