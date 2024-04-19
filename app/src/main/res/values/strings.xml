@@ -31,4 +31,7 @@
     <string name="register">Register</string>
     <string name="gender_female">Female</string>
     <string name="gender_male">Male</string>
+
+    <string name="work_in_progress">This is currently work in progress</string>
+    <string name="grab_beverage">Grab a beverage and check back later!</string>
 </resources>
