@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.petmatch.view.components.CheckboxComponent
@@ -38,7 +37,6 @@ import com.example.petmatch.view.ui_theme.MyApp
 fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
     val context = LocalContext.current
 
-    // Almacenar el estado del checkbox en una variable
     val isChecked = remember { mutableStateOf(false) }
 
     Surface(
@@ -99,7 +97,7 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
                     registerViewModel.onEvent(UIEvent.EmailChanged(it))
                 },
                 errorStatus = registerViewModel.registerUIState.value.emailError,
-                maxCharacters = 30
+                maxCharacters = 40
             )
 
             PasswordFieldComponent(
@@ -114,7 +112,6 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
 
             Spacer(modifier = Modifier.height(4.dp))
             CheckboxComponent(
-                value = stringResource(id = R.string.terms_and_conditions),
                 isChecked = isChecked
             )
 
@@ -125,7 +122,6 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
                 onRegisterBtn = {
                     registerViewModel.onEvent(UIEvent.RegisterBtn)
                 },
-                // Habilita el botón solo si el checkbox está marcado y todas las validaciones han pasado
                 isEnabled = isChecked.value && registerViewModel.allValidationsPassed.value
             )
 
@@ -138,7 +134,7 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
             registerViewModel.registrationStatus.value?.let { status ->
                 when (status) {
                     is RegisterViewModel.RegistrationStatus.Success -> {
-                        Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
+
                     }
                     is RegisterViewModel.RegistrationStatus.Error -> {
                         Toast.makeText(context, status.message, Toast.LENGTH_SHORT).show()

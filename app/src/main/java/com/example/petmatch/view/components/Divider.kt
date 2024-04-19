@@ -20,7 +20,7 @@ fun PetMatchDivider(
     color: Color = MaterialTheme.colorScheme.secondary,
     thickness: Dp = 1.dp
 ) {
-    HorizontalDivider(
+   HorizontalDivider(
         modifier = modifier,
         thickness = thickness,
         color = color

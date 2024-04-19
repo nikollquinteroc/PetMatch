@@ -22,11 +22,11 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -51,7 +51,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -194,7 +193,7 @@ fun PasswordFieldComponent(
 }
 
 @Composable
-fun CheckboxComponent(value: String, isChecked: MutableState<Boolean>) {
+fun CheckboxComponent(isChecked: MutableState<Boolean>) {
     Row(
         modifier = Modifier.fillMaxWidth().heightIn(56.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -205,14 +204,14 @@ fun CheckboxComponent(value: String, isChecked: MutableState<Boolean>) {
                 isChecked.value = it
             }
         )
-        ClickableComponent(value = value)
+        ClickableComponent()
     }
 }
 
 
 
 @Composable
-fun ClickableComponent(value: String) {
+fun ClickableComponent() {
     val initialText = "By continuing you accept our "
     val privacyPolicyText = "Privacy Policy"
     val andText = " and "
@@ -286,7 +285,7 @@ fun DividerText(){
     Row (modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically ){
 
-        Divider(modifier = Modifier
+        HorizontalDivider(modifier = Modifier
             .fillMaxWidth()
             .weight(1f),
             color = Color.Gray,
@@ -298,11 +297,12 @@ fun DividerText(){
             fontSize = 18.sp,
             color = TextColor)
 
-        Divider(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f),
-            color = Color.Gray,
-            thickness = 1.dp)
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            thickness = 1.dp, color = Color.Gray
+        )
     }
 }
 
@@ -438,17 +438,17 @@ fun RoleDropdown(
             onDismissRequest = { isExpanded = false }
         ) {
             DropdownMenuItem(
-                text = { Text(text = "Grief") },
+                text = { Text(text = "Adopter") },
                 onClick = {
-                    role = "Grief"
+                    role = "Adopter"
                     isExpanded = false
                     onRoleSelected(role)
                 }
             )
             DropdownMenuItem(
-                text = { Text(text = "Caregiver") },
+                text = { Text(text = "Pet Responsible") },
                 onClick = {
-                    role = "Caregiver"
+                    role = "Pet Responsible"
                     isExpanded = false
                     onRoleSelected(role)
                 }

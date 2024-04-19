@@ -6,7 +6,7 @@ object Validator {
     fun validateFirstName(fName: String?): validationResult {
         val regex = Regex("^[a-zA-ZáéíóúÁÉÍÓÚ]+(?: [a-zA-ZáéíóúÁÉÍÓÚ]+)*\$")
         return validationResult(
-            !fName.isNullOrBlank() &&
+            !fName.isNullOrEmpty() &&
                     fName.length in 2..31 &&
                     regex.matches(fName)
         )
@@ -15,8 +15,8 @@ object Validator {
     fun validateLastName(lName: String?): validationResult {
         val regex = Regex("^[a-zA-ZáéíóúÁÉÍÓÚ]+(?: [a-zA-ZáéíóúÁÉÍÓÚ]+)*\$")
         return validationResult(
-            !lName.isNullOrBlank() &&
-                    lName.length in 2..31 &&
+            !lName.isNullOrEmpty() &&
+                    lName.length in 2..41 &&
                     regex.matches(lName)
         )
     }

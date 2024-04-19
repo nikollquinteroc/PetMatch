@@ -1,18 +1,12 @@
 package com.example.petmatch.view.data
 
-
-
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.petmatch.view.data.rules.Validator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import androidx.compose.runtime.mutableStateOf
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-
 import org.mindrot.jbcrypt.BCrypt
-
 
 class RegisterViewModel : ViewModel() {
     private val TAG = RegisterViewModel::class.simpleName
@@ -71,6 +65,7 @@ class RegisterViewModel : ViewModel() {
             is UIEvent.RegisterBtn -> {
                 register()
             }
+
         }
     }
 
@@ -119,10 +114,6 @@ class RegisterViewModel : ViewModel() {
                 && roleResult.status)
 
     }
-
- 
-
-
     private fun createUserFirebase(email: String, password: String) {
         val hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
 
@@ -137,7 +128,9 @@ class RegisterViewModel : ViewModel() {
                             "email" to registerUIState.value.email,
                             "password" to hashedPassword,
                             "gender" to registerUIState.value.gender,
-                            "role" to registerUIState.value.role
+                            "role" to registerUIState.value.role,
+                            "img_url" to "",
+                            "pets" to FirebaseFirestore.getInstance().collection("pets").document()
                         )
 
                         FirebaseFirestore.getInstance().collection("users")
@@ -154,11 +147,9 @@ class RegisterViewModel : ViewModel() {
                     task.exception?.let { exception ->
                         when (exception) {
                             is FirebaseAuthUserCollisionException -> {
-
                                 showRegistrationError("Email already exists")
                             }
                             else -> {
-
                                 showRegistrationError("${exception.message}")
                             }
                         }
