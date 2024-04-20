@@ -72,8 +72,14 @@ private fun NavGraphBuilder.petMatchNavGraph(
         InfoContact(upPress)
     }
     composable(
-        route = MainDestinations.MAP
-    ) {
+        route = "${MainDestinations.MAP}/{${MainDestinations.PET_ID_KEY}}",
+        arguments = listOf(navArgument(MainDestinations.PET_ID_KEY) {
+            type = NavType.LongType
+        }
+        )
+    ) {backStackEntry ->
+        val arguments = requireNotNull(backStackEntry.arguments)
+        val petId = arguments.getLong(MainDestinations.PET_ID_KEY)
         MyMap(
             pets = pets,
             onNavigateToRoute = onNavigateToRoute,
