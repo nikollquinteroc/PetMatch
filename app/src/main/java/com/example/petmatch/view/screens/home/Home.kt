@@ -84,7 +84,8 @@ fun NavGraphBuilder.addHomeGraph(
     composable(HomeSections.PROFILE.route) {
         Profile(
             onNavigateToRoute = onNavigateToRoute,
-            modifier = modifier
+            modifier = modifier,
+            upPress = upPress
         )
     }
     composable(MainDestinations.INFO_CONTACT_ROUTE) {
@@ -93,7 +94,6 @@ fun NavGraphBuilder.addHomeGraph(
             modifier = modifier
         )
     }
-
 }
 
 @Composable

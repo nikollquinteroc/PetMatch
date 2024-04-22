@@ -54,9 +54,14 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.material3.AlertDialog
 import androidx.compose.ui.unit.sp
 
-@Composable
-fun MyTextFieldComponent(labelValue: String, painterResource: Painter, initialValue:String) {
 
+@Composable
+fun MyTextFieldComponent(
+    labelValue: String,
+    painterResource: Painter,
+    initialValue: String,
+    onValueChange: (String) -> Unit // Agrega esta lambda para notificar cambios
+) {
     val textValue = remember { mutableStateOf(initialValue) }
 
     OutlinedTextField(
@@ -72,6 +77,7 @@ fun MyTextFieldComponent(labelValue: String, painterResource: Painter, initialVa
         value = textValue.value,
         onValueChange = {
             textValue.value = it
+            onValueChange(it) // Notificar al ViewModel el cambio
         },
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "")
@@ -182,35 +188,28 @@ fun rememberLauncher(onResult: (Uri?) -> Unit): ManagedActivityResultLauncher<St
 
 
 @Composable
-fun GenderEditDropdown() {
-    var isExpanded by remember {
-        mutableStateOf(false)
-    }
-
-    var role by remember {
-        mutableStateOf("Male")
-    }
-
-    var rolPorDefecto by remember {
-        mutableStateOf("Female")
-    }
+fun GenderEditDropdown(
+    selectedGender: String,
+    onGenderSelected: (String) -> Unit
+) {
+    var isExpanded by remember { mutableStateOf(false) }
+    var role by remember { mutableStateOf(selectedGender) }
 
     ExposedDropdownMenuBox(
         expanded = isExpanded,
-        onExpandedChange = {isExpanded = it },
+        onExpandedChange = { isExpanded = it },
     ) {
         TextField(
             value = role,
             onValueChange = {},
             readOnly = true,
             trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(expanded  = isExpanded)
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
             },
             leadingIcon = {
                 Icon(painter = painterResource(id = R.drawable.gender), contentDescription = "")
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
-
             modifier = Modifier
                 .menuAnchor()
                 .fillMaxWidth()
@@ -218,7 +217,7 @@ fun GenderEditDropdown() {
         )
 
         ExposedDropdownMenu(
-            expanded = isExpanded ,
+            expanded = isExpanded,
             onDismissRequest = { isExpanded = false }
         ) {
             DropdownMenuItem(
@@ -227,7 +226,7 @@ fun GenderEditDropdown() {
                 },
                 onClick = {
                     role = "Male"
-                    rolPorDefecto = "Male"
+                    onGenderSelected("Male") // Notificar al ViewModel el cambio
                     isExpanded = false
                 }
             )
@@ -237,11 +236,10 @@ fun GenderEditDropdown() {
                 },
                 onClick = {
                     role = "Female"
-                    rolPorDefecto = "Female"
+                    onGenderSelected("Female") // Notificar al ViewModel el cambio
                     isExpanded = false
                 }
             )
         }
     }
 }
-

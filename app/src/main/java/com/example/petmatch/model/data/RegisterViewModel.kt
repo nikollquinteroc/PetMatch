@@ -120,8 +120,6 @@ class RegisterViewModel : ViewModel() {
 
     }
 
- 
-
 
     private fun createUserFirebase(email: String, password: String) {
         val hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt())

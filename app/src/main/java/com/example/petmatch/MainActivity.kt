@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.petmatch.view.screens.home.map.MapViewModel
+import com.example.petmatch.view.screens.home.profile.DetailsUserScreen
 import com.example.petmatch.view.ui_theme.MyApp
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -48,7 +49,8 @@ class MainActivity : ComponentActivity() {
         askPermissions()
         setContent {
             MyApp {
-                PetMatchApp(viewModel.locationState.value)
+               // PetMatchApp(viewModel.locationState.value)
+                DetailsUserScreen()
             }
         }
     }
