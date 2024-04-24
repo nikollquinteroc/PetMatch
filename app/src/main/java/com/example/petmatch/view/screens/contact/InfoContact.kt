@@ -17,6 +17,7 @@ fun InfoContact(
     upPress: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    
     Box(
         modifier = modifier
             .fillMaxSize()

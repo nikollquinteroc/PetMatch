@@ -37,8 +37,9 @@ fun Feed(
     modifier: Modifier = Modifier,
     viewModel: FeedViewModel = viewModel(factory = FeedViewModel.provideFactory())
 ) {
+    viewModel.getPets()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val petCollections = remember { PetRepo.getPets() }
+    //val petCollections = remember { PetRepo.getPets() }
     Scaffold(
         bottomBar = {
             PetMatchBottomBar(
@@ -50,7 +51,7 @@ fun Feed(
         modifier = modifier
     ) { paddingValues ->
         Feed(
-            petCollections = petCollections,
+            petCollections = uiState.petCollection,
             onPetClick = onPetClick,
             modifier = Modifier.padding(paddingValues)
         )
@@ -65,7 +66,7 @@ private fun Feed(
 ) {
     PetMatchSurface(modifier = modifier.fillMaxSize()) {
         Box {
-            CaretakerCollectionList(
+            PetCollectionList(
                 petCollections = petCollections,
                 onPetClick = onPetClick
             )
@@ -75,7 +76,7 @@ private fun Feed(
 }
 
 @Composable
-private fun CaretakerCollectionList(
+private fun PetCollectionList(
     petCollections: List<PetCollection>,
     onPetClick: (Long) -> Unit,
     modifier: Modifier = Modifier

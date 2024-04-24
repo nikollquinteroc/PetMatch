@@ -14,6 +14,6 @@ enum class HomeSections(
     val route: String
 ) {
     FEED(title= R.string.home_feed, icon = Icons.Outlined.Home, "home/feed"),
-    LOCATION(title = R.string.home_map, icon = Icons.Outlined.LocationOn, "home/map"),
+    MAP(title = R.string.home_map, icon = Icons.Outlined.LocationOn, "home/map"),
     PROFILE(title = R.string.home_profile, icon = Icons.Outlined.AccountCircle, "home/profile")
 }
