@@ -46,20 +46,18 @@ import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.petmatch.model.pets
+import com.example.petmatch.view.screens.petdetail.pets
 import com.example.petmatch.view.components.PetMatchSurface
-import com.example.petmatch.view.navigation.MainDestinations
 import com.example.petmatch.view.screens.home.feed.Feed
 import com.example.petmatch.view.screens.home.map.MyMap
 import com.example.petmatch.view.screens.home.profile.Profile
-import com.example.petmatch.view.screens.contact.InfoContact
 import com.example.petmatch.view.ui_theme.PetMatchTheme
 import com.example.petmatch.view.ui_theme.Shapes
 import java.util.Locale
 
 
 fun NavGraphBuilder.addHomeGraph(
-    onPetSelected: (Long, NavBackStackEntry) -> Unit,
+    onPetSelectedFromFeedScreen: (Long, NavBackStackEntry) -> Unit,
     onNavigateToRoute: (String) -> Unit,
     lastKnownLocation: Location?,
     upPress: () -> Unit,
@@ -67,12 +65,14 @@ fun NavGraphBuilder.addHomeGraph(
 ) {
     composable(HomeSections.FEED.route) { from ->
         Feed(
-            onPetClick = { id -> onPetSelected(id, from) },
+            onPetClick = { id -> onPetSelectedFromFeedScreen(id, from) },
             onNavigateToRoute = onNavigateToRoute,
             modifier = modifier
         )
     }
-    composable(HomeSections.LOCATION.route) {
+    composable(
+        route = HomeSections.MAP.route
+    ) {
         MyMap(
             pets = pets,
             onNavigateToRoute = onNavigateToRoute,
@@ -87,13 +87,6 @@ fun NavGraphBuilder.addHomeGraph(
             modifier = modifier
         )
     }
-    composable(MainDestinations.INFO_CONTACT_ROUTE) {
-        InfoContact(
-            upPress = upPress,
-            modifier = modifier
-        )
-    }
-
 }
 
 @Composable

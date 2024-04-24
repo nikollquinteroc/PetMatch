@@ -12,8 +12,6 @@ import com.example.petmatch.view.screens.home.map.MapViewModel
 import com.example.petmatch.view.ui_theme.MyApp
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 
 class MainActivity : ComponentActivity() {
 

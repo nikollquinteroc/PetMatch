@@ -1,5 +1,8 @@
 package com.example.petmatch.model
 
+import com.example.petmatch.view.screens.petdetail.Pet
+import com.example.petmatch.view.screens.petdetail.pets
+
 data class PetCollection(
     val id: Long,
     val name : String,
@@ -24,7 +27,7 @@ private val highlights = PetCollection(
 
 private val popular = PetCollection(
     id = 2L,
-    name = "Preferred by the Adopters",
+    name = "Newly added",
     pets = pets.subList(6, 9)
 )
 

@@ -9,14 +9,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.petmatch.model.Pet
-import com.example.petmatch.model.pets
 import com.example.petmatch.view.navigation.MainDestinations
 import com.example.petmatch.view.navigation.rememberPetMatchNavController
+import com.example.petmatch.view.screens.contact.InfoContact
 import com.example.petmatch.view.screens.home.HomeSections
 import com.example.petmatch.view.screens.home.addHomeGraph
-import com.example.petmatch.view.screens.home.map.MyMap
-import com.example.petmatch.view.screens.contact.InfoContact
+import com.example.petmatch.view.screens.login.LoginScreen
 import com.example.petmatch.view.screens.petdetail.PetDetail
 
 
@@ -25,31 +23,38 @@ fun PetMatchApp(lastKnownLocation: Location?) {
     val petMatchNavController = rememberPetMatchNavController()
     NavHost(
         navController = petMatchNavController.navController,
-        startDestination = MainDestinations.HOME_ROUTE
+        startDestination = MainDestinations.LOGIN_ROUTE
     ) {
         petMatchNavGraph(
-            onPetSelect = petMatchNavController::navigateToPetDetail,
+            onPetSelectFromFeedScreen = petMatchNavController::navigateToPetDetail,
+            onPetSelectFromDetailScreen = petMatchNavController::navigateToPetDetail,
+            onViewPetOnMapScreen = petMatchNavController::navigateToMapFromDetailScreen,
+            onAdoptPet = petMatchNavController::navigateToAdoptPetFromDetailScreen,
             upPress = petMatchNavController::upPress,
             onNavigateToRoute = petMatchNavController::navigateToBottomBarRoute,
-            lastKnownLocation = lastKnownLocation,
-            pets = pets
+            lastKnownLocation = lastKnownLocation
         )
     }
 }
 
 private fun NavGraphBuilder.petMatchNavGraph(
-    onPetSelect: (Long, NavBackStackEntry) -> Unit,
+    onPetSelectFromFeedScreen: (Long, NavBackStackEntry) -> Unit,
+    onPetSelectFromDetailScreen: (Long, NavBackStackEntry) -> Unit,
+    onViewPetOnMapScreen: (Long, NavBackStackEntry) -> Unit,
+    onAdoptPet: (Long, NavBackStackEntry) -> Unit,
     upPress: () -> Unit,
     onNavigateToRoute: (String) -> Unit,
-    lastKnownLocation: Location?,
-    pets: List<Pet>
+    lastKnownLocation: Location?
 ) {
+    composable(route = MainDestinations.LOGIN_ROUTE) {
+        LoginScreen(onNavigateToRoute)
+    }
     navigation(
         route = MainDestinations.HOME_ROUTE,
         startDestination = HomeSections.FEED.route
     ) {
         addHomeGraph(
-            onPetSelected = onPetSelect,
+            onPetSelectedFromFeedScreen = onPetSelectFromFeedScreen,
             onNavigateToRoute = onNavigateToRoute,
             lastKnownLocation = lastKnownLocation,
             upPress = upPress
@@ -57,34 +62,20 @@ private fun NavGraphBuilder.petMatchNavGraph(
     }
     composable(
         route = "${MainDestinations.PET_DETAIL_ROUTE}/{${MainDestinations.PET_ID_KEY}}",
-        arguments = listOf(navArgument(MainDestinations.PET_ID_KEY) {
-            type = NavType.LongType
-        }
-        )
+        arguments = listOf(navArgument(MainDestinations.PET_ID_KEY) { type = NavType.LongType })
     ) { backStackEntry ->
         val arguments = requireNotNull(backStackEntry.arguments)
         val petId = arguments.getLong(MainDestinations.PET_ID_KEY)
-        PetDetail(petId, upPress, onNavigateToRoute)
-    }
-    composable(
-        route = MainDestinations.INFO_CONTACT_ROUTE
-    ) {
-        InfoContact(upPress)
-    }
-    composable(
-        route = "${MainDestinations.MAP}/{${MainDestinations.PET_ID_KEY}}",
-        arguments = listOf(navArgument(MainDestinations.PET_ID_KEY) {
-            type = NavType.LongType
-        }
+        PetDetail(
+            petId = petId,
+            from = backStackEntry,
+            upPress = upPress,
+            onViewPetOnMapScreen = onViewPetOnMapScreen,
+            onAdoptPet = onAdoptPet,
+            onPetSelectFromDetailScreen =  { id -> onPetSelectFromDetailScreen(id, backStackEntry) }
         )
-    ) {backStackEntry ->
-        val arguments = requireNotNull(backStackEntry.arguments)
-        val petId = arguments.getLong(MainDestinations.PET_ID_KEY)
-        MyMap(
-            pets = pets,
-            onNavigateToRoute = onNavigateToRoute,
-            lastKnownLocation = lastKnownLocation,
-            upPress = upPress
-        )
+    }
+    composable(route = MainDestinations.INFO_CONTACT_ROUTE) {
+        InfoContact(upPress = upPress)
     }
 }

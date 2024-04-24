@@ -43,10 +43,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.petmatch.R
-import com.example.petmatch.model.Pet
+import com.example.petmatch.view.screens.petdetail.Pet
 import com.example.petmatch.model.PetCollection
 import com.example.petmatch.model.CollectionType
-import com.example.petmatch.model.pets
+import com.example.petmatch.view.screens.petdetail.pets
 import com.example.petmatch.view.ui_theme.PetMatchTheme
 import com.example.petmatch.view.utils.mirroringIcon
 
@@ -191,7 +191,7 @@ fun PetItem(
                 .padding(8.dp)
         ) {
             PetImage(
-                imageUrl = pet.imageUrl,
+                imageUrl = pet.image_url,
                 elevation = 4.dp,
                 contentDescription = null,
                 modifier = Modifier.size(120.dp)
@@ -250,7 +250,7 @@ private fun HighlightPetItem(
                         )
                 )
                 PetImage(
-                    imageUrl = pet.imageUrl,
+                    imageUrl = pet.image_url,
                     contentDescription = null,
                     modifier = Modifier
                         .size(120.dp)
@@ -268,7 +268,7 @@ private fun HighlightPetItem(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = pet.description,
+                text = pet.tag,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(horizontal = 16.dp)

@@ -8,23 +8,26 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.petmatch.model.Pet
+import com.example.petmatch.view.screens.home.HomeSections
 
 /**
  * Destinations used in [PetMatchApp]
  */
 object MainDestinations {
+    const val LOGIN_ROUTE = "login"
+    const val REGISTER_ADOPTER_ROUTE = "register_adopter"
     const val HOME_ROUTE = "home"
     const val PET_DETAIL_ROUTE = "pet"
+    const val LATITUDE = "latitude"
+    const val LONGITUDE = "longitude"
     const val INFO_CONTACT_ROUTE = "info_contact"
-    const val MAP = "map"
     const val PET_ID_KEY = "petId"
 }
 
 @Composable
 fun rememberPetMatchNavController(
     navController: NavHostController = rememberNavController()
-): PetMatchNavController = remember(navController){
+): PetMatchNavController = remember(navController) {
     PetMatchNavController(navController)
 }
 
@@ -35,22 +38,21 @@ class PetMatchNavController(
     private val currentRoute: String?
         get() = navController.currentDestination?.route
 
-    fun upPress() {
+    fun
+
+            upPress() {
         navController.navigateUp()
     }
 
     fun navigateToBottomBarRoute(route: String) {
         if (route != currentRoute) {
-            if (route == MainDestinations.INFO_CONTACT_ROUTE) {
-                navController.navigate(route)
-            } else {
-                navController.navigate(route) {
-                    launchSingleTop = true
-                    restoreState = true
-
-                    popUpTo(findStartDestination(navController.graph).id) {
-                        saveState = true
-                    }
+            navController.navigate(route) {
+                launchSingleTop = true
+                restoreState = true
+                // Pop up backstack to the first destination and save state. This makes going back
+                // to the start destination when pressing back in any other bottom tab.
+                popUpTo(findStartDestination(navController.graph).id) {
+                    saveState = true
                 }
             }
         }
@@ -62,10 +64,17 @@ class PetMatchNavController(
         }
     }
 
-    fun navigateToMap(petId: Long) {
-        navController.navigate("${MainDestinations.MAP}/${petId}")
+    fun navigateToMapFromDetailScreen(petId: Long, from: NavBackStackEntry) {
+        if (from.lifecycleIsResumed()) {
+            navController.navigate(HomeSections.MAP.route)
+        }
     }
 
+    fun navigateToAdoptPetFromDetailScreen(petId: Long, from: NavBackStackEntry) {
+        if (from.lifecycleIsResumed()) {
+            navController.navigate(MainDestinations.INFO_CONTACT_ROUTE)
+        }
+    }
 }
 
 private fun NavBackStackEntry.lifecycleIsResumed() =

@@ -1,6 +1,5 @@
 package com.example.petmatch.view.screens.petdetail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,14 +35,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.util.lerp
+import androidx.navigation.NavBackStackEntry
 import com.example.petmatch.R
-import com.example.petmatch.model.Pet
 import com.example.petmatch.model.PetCollection
 import com.example.petmatch.model.PetRepo
 import com.example.petmatch.view.components.PetCollection
@@ -52,8 +50,6 @@ import com.example.petmatch.view.components.PetMatchButton
 import com.example.petmatch.view.components.PetMatchDivider
 import com.example.petmatch.view.components.PetMatchSurface
 import com.example.petmatch.view.components.Up
-import com.example.petmatch.view.navigation.MainDestinations
-import com.example.petmatch.view.ui_theme.PetMatchTheme
 import kotlin.math.max
 import kotlin.math.min
 
@@ -72,25 +68,34 @@ private val HzPadding = Modifier.padding(horizontal = 24.dp)
 @Composable
 fun PetDetail(
     petId: Long,
+    from: NavBackStackEntry,
     upPress: () -> Unit,
-    onNavigateToRoute: (String) -> Unit
+    onViewPetOnMapScreen: (Long, NavBackStackEntry) -> Unit,
+    onAdoptPet: (Long, NavBackStackEntry) -> Unit,
+    onPetSelectFromDetailScreen: (Long) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val pet = remember(petId) { PetRepo.getPet(petId) }
+    val petFromRepo = remember(petId) { PetRepo.getPet(petId) }
     val related = remember(petId) { PetRepo.getRelated(petId) }
 
-    Box(Modifier.fillMaxSize()) {
+    Box(modifier.fillMaxSize()) {
         val scroll = rememberScrollState(0)
         Header()
         Body(
+            pet = petFromRepo,
             related = related,
-            scroll = scroll
+            scroll = scroll,
+            onPetSelectFromDetailScreen= onPetSelectFromDetailScreen
         )
-        Title(pet = pet) { scroll.value }
-        Image(imageUrl = pet.imageUrl) { scroll.value }
+        Title(pet = petFromRepo) { scroll.value }
+        Image(imageUrl = petFromRepo.image_url) { scroll.value }
         Up(upPress)
         DetailBottomBar(
             modifier = Modifier.align(Alignment.BottomCenter),
-            onNavigateToRoute = onNavigateToRoute
+            petId = petId,
+            from = from,
+            onViewPetOnMapScreen = onViewPetOnMapScreen,
+            onAdoptPet = onAdoptPet
         )
     }
 }
@@ -115,8 +120,10 @@ private fun Header() {
 
 @Composable
 private fun Body(
+    pet: Pet,
     related: List<PetCollection>,
-    scroll: ScrollState
+    scroll: ScrollState,
+    onPetSelectFromDetailScreen: (Long) -> Unit
 ) {
     Column {
         Spacer(
@@ -144,7 +151,7 @@ private fun Body(
                     Spacer(modifier = Modifier.height(16.dp))
                     var seeMore by remember { mutableStateOf(true) }
                     Text(
-                        text = stringResource(id = R.string.detail_placeholder),
+                        text = pet.description,
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary,
                         maxLines = if (seeMore) 5 else Int.MAX_VALUE,
@@ -172,11 +179,11 @@ private fun Body(
                     Spacer(modifier = Modifier.height(40.dp))
                     PetMatchDivider()
 
-                    related.forEach { caretakerCollection ->
-                        key(caretakerCollection.id) {
+                    related.forEach { petCollection ->
+                        key(petCollection.id) {
                             PetCollection(
-                                petCollection = caretakerCollection,
-                                onPetClick = { },
+                                petCollection = petCollection,
+                                onPetClick = onPetSelectFromDetailScreen,
                                 highlight = false
                             )
                         }
@@ -292,7 +299,10 @@ private fun CollapsingImageLayout(
 @Composable
 private fun DetailBottomBar(
     modifier: Modifier = Modifier,
-    onNavigateToRoute: (String) -> Unit
+    petId: Long,
+    from: NavBackStackEntry,
+    onViewPetOnMapScreen: (Long, NavBackStackEntry) -> Unit,
+    onAdoptPet: (Long, NavBackStackEntry) -> Unit
 ) {
     PetMatchSurface(modifier = modifier) {
         Column {
@@ -305,13 +315,13 @@ private fun DetailBottomBar(
                     .heightIn(min = BottomBarHeight)
             ) {
                 DetailBottomBarItem(
-                    onBottomClick = { onNavigateToRoute(MainDestinations.MAP) },
+                    onBottomClick = { onViewPetOnMapScreen(petId, from) },
                     bottomTitle = R.string.view_on_map_bottom,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 DetailBottomBarItem(
-                    onBottomClick = { onNavigateToRoute(MainDestinations.INFO_CONTACT_ROUTE) },
+                    onBottomClick = { onAdoptPet(petId, from) },
                     bottomTitle = R.string.adopt_bottom,
                     modifier = Modifier.weight(1f)
                 )
@@ -338,15 +348,15 @@ private fun DetailBottomBarItem(
     }
 }
 
-@Preview(name = "default")
-@Preview(name = "dark them", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun CaretakerDetailPreview() {
-    PetMatchTheme {
-        PetDetail(
-            petId = 1L,
-            upPress = { },
-            onNavigateToRoute = {}
-        )
-    }
-}
+//@Preview(name = "default")
+//@Preview(name = "dark them", uiMode = Configuration.UI_MODE_NIGHT_YES)
+//@Composable
+//private fun CaretakerDetailPreview() {
+//    PetMatchTheme {
+//        PetDetail(
+//            petId = 1L,
+//            upPress = { },
+//            onNavigateToRoute = {}
+//        )
+//    }
+//}

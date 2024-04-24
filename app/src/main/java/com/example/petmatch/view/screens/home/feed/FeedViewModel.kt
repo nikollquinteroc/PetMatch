@@ -3,11 +3,10 @@ package com.example.petmatch.view.screens.home.feed
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.petmatch.model.CollectionType
-import com.example.petmatch.model.Pet
+import com.example.petmatch.view.screens.petdetail.Pet
 import com.example.petmatch.model.PetCollection
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -24,7 +23,7 @@ class FeedViewModel : ViewModel() {
             .addOnSuccessListener { result ->
                 val pets = mutableListOf<Pet>()
                 for (document in result.documents) {
-                    document.toObject<Pet>()?.let { pets.add(it) }
+                    document.toObject(Pet::class.java)?.let { pets.add(it) }
                 }
 
                 val highlights = getHighlights(pets)
@@ -61,7 +60,7 @@ class FeedViewModel : ViewModel() {
     private fun getPopular(pets: List<Pet>): PetCollection {
         return PetCollection(
             id = 2L,
-            name = "Preferred by the Adopters",
+            name = "My Favorite pets",
             pets = pets.subList(6, 9)
         )
     }
