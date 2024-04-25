@@ -32,4 +32,20 @@
 
     <string name="work_in_progress">This is currently work in progress</string>
     <string name="grab_beverage">Grab a beverage and check back later!</string>
+
+
+
+    <string name="hello">Hey there,</string>
+    <string name="create_account">Create an Account </string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_name">Email Name</string>
+    <string name="terms_and_conditions_header">Term of Use</string>
+    <string name="or">Or</string>
+    <string name="login">Login</string>
+    <string name="go_to_login">Already have an account? Login</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
+
+    <string name="forgot_password">Forgot your password</string>
 </resources>

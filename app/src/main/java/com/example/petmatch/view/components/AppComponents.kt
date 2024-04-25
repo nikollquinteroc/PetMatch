@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.petmatch.view.components
 
 import android.util.Log
@@ -22,20 +20,24 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,7 +45,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -60,118 +62,139 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.petmatch.R
+import com.example.petmatch.view.ui_theme.componentShapes
+import com.example.petmatch.view.ui_theme.theme.BgColor
+import com.example.petmatch.view.ui_theme.theme.GrayColor
 import com.example.petmatch.view.ui_theme.theme.Primary
-import com.example.petmatch.view.ui_theme.theme.Secondary
 import com.example.petmatch.view.ui_theme.theme.TextColor
-import androidx.compose.runtime.*
-import androidx.compose.ui.res.painterResource
+import com.example.petmatch.view.ui_theme.componentShapes
 
 
 @Composable
-fun RegisterTextComponent(value: String){
+fun NormalTextComponent(value: String) {
     Text(
         text = value,
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 40.dp),
-        style = TextStyle(
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Normal,
-            fontStyle = FontStyle.Normal
-        ),
-        color = colorResource(id = R.color.colorText),
+        style = MaterialTheme.typography.headlineMedium,
+        color = MaterialTheme.colorScheme.primary,
         textAlign = TextAlign.Center
     )
 }
 
 @Composable
-fun HeadingTextComponent(value: String){
+fun HeadingTextComponent(value: String) {
     Text(
         text = value,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 20.dp),
-        style = TextStyle(
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Normal
-        ),
-        color = colorResource(id = R.color.colorText),
+            .heightIn(),
+        style = MaterialTheme.typography.headlineLarge,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.primary,
         textAlign = TextAlign.Center
     )
 }
+
 
 @Composable
 fun MyTextFieldComponent(
     labelValue: String,
     painterResource: Painter,
-    onTextSelected: (String) -> Unit,
+    onTextChanged: (String) -> Unit,
     errorStatus: Boolean = false,
-    maxCharacters: Int = Int.MAX_VALUE
 ) {
-    val textValue = remember { mutableStateOf("") }
+    val textValue = remember {
+        mutableStateOf("")
+    }
+
+    val borderColor = if (errorStatus) {
+        Color.Red
+    } else {
+        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+    }
 
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(4.dp)),
-        label = { Text(text = labelValue) },
-        colors = TextFieldDefaults.colors(
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            .background(color = MaterialTheme.colorScheme.onPrimary)
+            .clip(componentShapes.small),
+        label = { Text(text = labelValue, color = MaterialTheme.colorScheme.primary) },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = borderColor,
+            cursorColor = MaterialTheme.colorScheme.primary,
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         singleLine = true,
         maxLines = 1,
         value = textValue.value,
         onValueChange = {
-            if (it.length <= maxCharacters) {
-                textValue.value = it
-                onTextSelected(it)
-            }
+            textValue.value = it
+            onTextChanged(it)
         },
         leadingIcon = {
-            Icon(painter = painterResource, contentDescription = "")
+            Icon(
+                painter = painterResource,
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.primary
+            )
         },
-        isError = !errorStatus
+        //isError = !errorStatus
     )
 }
 
-
 @Composable
-fun PasswordFieldComponent(
-    labelValue: String,
-    painterResource: Painter,
+fun PasswordTextFieldComponent(
+    labelValue: String, painterResource: Painter,
     onTextSelected: (String) -> Unit,
-    errorStatus: Boolean = false,
-    maxCharacters: Int = Int.MAX_VALUE ) {
+    errorStatus: Boolean = false
+) {
+
     val localFocusManager = LocalFocusManager.current
-    val password = remember { mutableStateOf("") }
-    val passwordVisible = remember { mutableStateOf(false) }
+    val password = remember {
+        mutableStateOf("")
+    }
+
+    val passwordVisible = remember {
+        mutableStateOf(false)
+    }
+
+    val borderColor = if (errorStatus) {
+        Color.Red
+    } else {
+        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+    }
 
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(4.dp)),
-        label = { Text(text = labelValue) },
-        colors = TextFieldDefaults.colors(
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            .background(color = MaterialTheme.colorScheme.onPrimary)
+            .clip(componentShapes.small),
+        label = { Text(text = labelValue, color = MaterialTheme.colorScheme.primary) },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = borderColor,
+            cursorColor = MaterialTheme.colorScheme.primary
         ),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        singleLine = true,
         keyboardActions = KeyboardActions {
             localFocusManager.clearFocus()
         },
-        singleLine = true,
         maxLines = 1,
         value = password.value,
-        onValueChange = { newValue ->
-            if (newValue.length <= maxCharacters) {
-                password.value = newValue
-                onTextSelected(newValue)
-            }
+        onValueChange = {
+            password.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
-            Icon(painter = painterResource, contentDescription = "")
+            Icon(
+                painter = painterResource,
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.primary
+            )
         },
         trailingIcon = {
             val iconImage = if (passwordVisible.value) {
@@ -179,85 +202,98 @@ fun PasswordFieldComponent(
             } else {
                 Icons.Filled.VisibilityOff
             }
-            val description = if (passwordVisible.value) {
+
+            var description = if (passwordVisible.value) {
                 stringResource(id = R.string.hide_password)
             } else {
                 stringResource(id = R.string.show_password)
             }
+
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                Icon(imageVector = iconImage, contentDescription = description)
+                Icon(
+                    imageVector = iconImage,
+                    contentDescription = description,
+                    tint = MaterialTheme.colorScheme.primary
+                )
             }
         },
+
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-        isError = !errorStatus
+        //isError = !errorStatus
+
     )
 }
 
 @Composable
-fun CheckboxComponent(value: String, isChecked: MutableState<Boolean>) {
+fun CheckboxComponent(
+    value: String,
+    onTextSelected: (String) -> Unit,
+    onCheckedChange: (Boolean) -> Unit/*, isChecked: MutableState<Boolean>*/
+) {
     Row(
-        modifier = Modifier.fillMaxWidth().heightIn(56.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(56.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Checkbox(
-            checked = isChecked.value,
+
+        val checkedState = remember {
+            mutableStateOf(false)
+        }
+        Checkbox(checked = checkedState.value,
             onCheckedChange = {
-                isChecked.value = it
-            }
-        )
-        ClickableComponent(value = value)
+                checkedState.value = !checkedState.value
+                onCheckedChange.invoke(it)
+            })
+
+        ClickableTextComponent(value = value, onTextSelected)
     }
 }
 
-
-
 @Composable
-fun ClickableComponent(value: String) {
+fun ClickableTextComponent(value: String, onTextSelected: (String) -> Unit) {
     val initialText = "By continuing you accept our "
     val privacyPolicyText = "Privacy Policy"
     val andText = " and "
     val termsAndConditionsText = "Term of Use"
 
-    val annotationString = buildAnnotatedString {
+    val annotatedString = buildAnnotatedString {
         append(initialText)
-
-        withStyle(style = SpanStyle(color = Primary, textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
             pushStringAnnotation(tag = privacyPolicyText, annotation = privacyPolicyText)
             append(privacyPolicyText)
+            pop()
         }
-
         append(andText)
-
-        withStyle(style = SpanStyle(color = Primary, textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
             pushStringAnnotation(tag = termsAndConditionsText, annotation = termsAndConditionsText)
             append(termsAndConditionsText)
+            pop()
         }
     }
 
-    ClickableText(
-        text = annotationString,
-        onClick = { offset ->
-            annotationString.getStringAnnotations(offset, offset)
-                .firstOrNull()?.also { span ->
-                    Log.d("ClickableComponent", "$span")
+    ClickableText(text = annotatedString, onClick = { offset ->
+        annotatedString.getStringAnnotations(offset, offset)
+            .firstOrNull()?.also { span ->
+                Log.d("ClickableTextComponent", "${span.item}")
+
+                if ((span.item == termsAndConditionsText) || (span.item == privacyPolicyText)) {
+                    onTextSelected(span.item)
                 }
-        }
+            }
+    }
     )
 }
 
-
 @Composable
-fun btnRegister(value: String , onRegisterBtn : () -> Unit, isEnabled: Boolean = false){
+fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boolean = false) {
     Button(
-
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(48.dp),
-        onClick = {
-            onRegisterBtn.invoke()
-        },
+        onClick = { onButtonClicked.invoke() },
         contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
         shape = RoundedCornerShape(50.dp),
         enabled = isEnabled
     ) {
@@ -266,61 +302,71 @@ fun btnRegister(value: String , onRegisterBtn : () -> Unit, isEnabled: Boolean =
                 .fillMaxWidth()
                 .heightIn(48.dp)
                 .background(
-                    brush = Brush.horizontalGradient(listOf(Secondary, Primary)),
+                    brush = Brush.horizontalGradient(
+                        listOf(
+                            MaterialTheme.colorScheme.secondary,
+                            MaterialTheme.colorScheme.primary
+                        )
+                    ),
                     shape = RoundedCornerShape(50.dp)
                 ),
-            contentAlignment =  Alignment.Center
-        ){
+            contentAlignment = Alignment.Center
+        ) {
             Text(
                 text = value,
-                fontSize = 18.sp,
-                color = Color.White,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }
 }
 
 @Composable
-fun DividerText(){
-    Row (modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically ){
+fun DividerTextComponent() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
 
-        Divider(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f),
-            color = Color.Gray,
-            thickness = 1.dp)
+        PetMatchDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            color = MaterialTheme.colorScheme.tertiary,
+            thickness = 2.dp
+        )
 
         Text(
             modifier = Modifier.padding(8.dp),
-            text = "or",
-            fontSize = 18.sp,
-            color = TextColor
+            text = stringResource(id = R.string.or),
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.primary
         )
 
-        Divider(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f),
-            color = Color.Gray,
-            thickness = 1.dp)
+        PetMatchDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            color = MaterialTheme.colorScheme.tertiary,
+            thickness = 2.dp
+        )
+
     }
 }
 
 @Composable
-fun ClickableLoginTextComponent(onTextSelected: (String) -> Unit){
+fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (String) -> Unit) {
+    val initialText =
+        if (tryingToLogin) "Already have an account? " else "Don't have an account yet?"
+    val loginText = if (tryingToLogin) "Login" else " Register"
 
-    val initialText = "Already have an account? "
-    val loginText =" Login"
-
-    val annotationString = buildAnnotatedString {
+    val annotatedString = buildAnnotatedString {
         append(initialText)
-
-        withStyle(style = SpanStyle(color = Primary)){
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
+            pop()
         }
-
     }
 
     ClickableText(
@@ -333,16 +379,34 @@ fun ClickableLoginTextComponent(onTextSelected: (String) -> Unit){
             fontStyle = FontStyle.Normal,
             textAlign = TextAlign.Center
         ),
-        text = annotationString, onClick = {offset ->
-            annotationString.getStringAnnotations(offset,offset)
-                .firstOrNull()?.also { span->
-                    Log.d("ClickableComponent","{${span.item}}")
+        text = annotatedString,
+        onClick = { offset ->
+            annotatedString.getStringAnnotations(offset, offset)
+                .firstOrNull()?.also { span ->
+                    Log.d("ClickableLoginComponent", "${span.item}")
 
-                    if (span.item == loginText){
+                    if (span.item == loginText) {
                         onTextSelected(span.item)
                     }
                 }
-        } )
+        }
+    )
+}
+
+
+@Composable
+fun UnderLinedTextComponent(value: String) {
+    Text(
+        text = value,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp),
+        style = MaterialTheme.typography.headlineSmall,
+        color = MaterialTheme.colorScheme.primary,
+        textAlign = TextAlign.Center,
+        textDecoration = TextDecoration.Underline
+    )
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -366,16 +430,24 @@ fun GenderDropdown(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
             },
             leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.gender), contentDescription = "")
+                Icon(
+                    painter = painterResource(id = R.drawable.gender),
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.primary)
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            placeholder = { Text("Select Gender") },
+            placeholder = {
+                Text(
+                    text = "Select Gender",
+                    color = MaterialTheme.colorScheme.primary
+                )
+            },
             modifier = Modifier
                 .menuAnchor()
                 .fillMaxWidth()
-                .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
+                .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(4.dp))
                 .clickable(onClick = { isExpanded = true }),
-            isError = !errorStatus
+            //isError = !errorStatus
         )
 
         ExposedDropdownMenu(
@@ -402,6 +474,7 @@ fun GenderDropdown(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RoleDropdown(
     onRoleSelected: (String) -> Unit,
@@ -425,13 +498,13 @@ fun RoleDropdown(
                 Icon(painter = painterResource(id = R.drawable.roles), contentDescription = "")
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            placeholder = { Text("Select Role") },
+            placeholder = { Text(text = "Select Role", color = MaterialTheme.colorScheme.primary) },
             modifier = Modifier
                 .menuAnchor()
                 .fillMaxWidth()
-                .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
+                .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(4.dp))
                 .clickable(onClick = { isExpanded = true }),
-            isError = !errorStatus
+            //isError = !errorStatus
         )
 
         ExposedDropdownMenu(
@@ -439,17 +512,17 @@ fun RoleDropdown(
             onDismissRequest = { isExpanded = false }
         ) {
             DropdownMenuItem(
-                text = { Text(text = "Grief") },
+                text = { Text(text = "Adopters") },
                 onClick = {
-                    role = "Grief"
+                    role = "Adopters"
                     isExpanded = false
                     onRoleSelected(role)
                 }
             )
             DropdownMenuItem(
-                text = { Text(text = "Caregiver") },
+                text = { Text(text = "Pet Responsible") },
                 onClick = {
-                    role = "Caregiver"
+                    role = "Pet Responsible"
                     isExpanded = false
                     onRoleSelected(role)
                 }
