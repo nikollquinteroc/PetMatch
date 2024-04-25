@@ -16,28 +16,35 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
-import com.example.petmatch.R
-import com.example.petmatch.view.ui_theme.theme.Primary
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -52,19 +59,26 @@ import androidx.compose.ui.graphics.asImageBitmap
 
 
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.petmatch.R
 
 @Composable
-fun MyTextFieldComponent(labelValue: String, painterResource: Painter, initialValue:String) {
-
+fun MyTextFieldComponent(
+    labelValue: String,
+    painterResource: Painter,
+    initialValue: String
+) {
     val textValue = remember { mutableStateOf(initialValue) }
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = labelValue) },
+        label = { Text(text = labelValue, color = MaterialTheme.colorScheme.primary) },
         colors = TextFieldDefaults.colors(
-            focusedLabelColor = Primary,
-            cursorColor = Primary
+            focusedLabelColor = MaterialTheme.colorScheme.primary,
+            cursorColor = MaterialTheme.colorScheme.primary
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         singleLine = true,
@@ -74,7 +88,11 @@ fun MyTextFieldComponent(labelValue: String, painterResource: Painter, initialVa
             textValue.value = it
         },
         leadingIcon = {
-            Icon(painter = painterResource, contentDescription = "")
+            Icon(
+                painter = painterResource,
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
     )
 }
@@ -91,9 +109,7 @@ fun CircularImagePicker() {
             isPressed = true
         }
     }
-
     Box(
-
         contentAlignment = Alignment.TopCenter
     ) {
         Surface(
@@ -102,7 +118,8 @@ fun CircularImagePicker() {
                 .clip(CircleShape)
                 .clickable {
                     launcher.launch("image/*")
-                }.border(2.dp, Color.Black, CircleShape)
+                }
+                .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
         ) {
             imageBitmap?.let {
                 Image(
@@ -114,8 +131,11 @@ fun CircularImagePicker() {
                         .clip(CircleShape)
                 )
             } ?: Image(
-                painter = painterResource(id = R.drawable.user),
+                painter = painterResource(id = R.drawable.profile),
                 contentDescription = null,
+                colorFilter = ColorFilter.tint(
+                    color = MaterialTheme.colorScheme.primary
+                ),
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape)
@@ -170,7 +190,6 @@ fun loadImage(uri: Uri?, context: Context, onLoaded: (ImageBitmap?) -> Unit) {
     }
 }
 
-
 @Composable
 fun rememberLauncher(onResult: (Uri?) -> Unit): ManagedActivityResultLauncher<String, Uri?> {
     val context = LocalContext.current
@@ -179,8 +198,6 @@ fun rememberLauncher(onResult: (Uri?) -> Unit): ManagedActivityResultLauncher<St
     }
 }
 
-
-
 @Composable
 fun GenderEditDropdown() {
     var isExpanded by remember {
@@ -188,7 +205,7 @@ fun GenderEditDropdown() {
     }
 
     var role by remember {
-        mutableStateOf("Male")
+        mutableStateOf("Female")
     }
 
     var rolPorDefecto by remember {
@@ -197,17 +214,21 @@ fun GenderEditDropdown() {
 
     ExposedDropdownMenuBox(
         expanded = isExpanded,
-        onExpandedChange = {isExpanded = it },
+        onExpandedChange = { isExpanded = it },
     ) {
         TextField(
             value = role,
             onValueChange = {},
             readOnly = true,
             trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(expanded  = isExpanded)
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
             },
             leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.gender), contentDescription = "")
+                Icon(
+                    painter = painterResource(id = R.drawable.gender),
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.primary
+                )
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
 
@@ -218,7 +239,7 @@ fun GenderEditDropdown() {
         )
 
         ExposedDropdownMenu(
-            expanded = isExpanded ,
+            expanded = isExpanded,
             onDismissRequest = { isExpanded = false }
         ) {
             DropdownMenuItem(

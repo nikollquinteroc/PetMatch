@@ -68,13 +68,15 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.ui.util)
     implementation(libs.coil.kt.compose)
-
     implementation(platform(libs.firebase.bom))
 
 
     implementation("androidx.compose.material:material-icons-extended:1.6.5")
     implementation ("org.mindrot:jbcrypt:0.4")
     implementation("com.google.firebase:firebase-auth")
+
+    //implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    //implementation("com.google.firebase:firebase-auth-ktx")
 
     //Map
     implementation(libs.google.maps)

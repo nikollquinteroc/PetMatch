@@ -9,6 +9,7 @@ class PetMatch : Application(){
         super.onCreate()
 
         FirebaseApp.initializeApp(this)
+
         FirebaseFirestore.getInstance()
     }
 }
