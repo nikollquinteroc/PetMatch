@@ -20,17 +20,16 @@ val pets = listOf(
         name = "Lolita",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1707177763.jpg",
         tag = "Loyal pet",
-        description = "¡Conoce a Lolita, la encantadora mascota que está buscando un hogar para" +
-                " siempre! Lolita es una fiel compañera que ha cautivado a todos con su dulce" +
-                " personalidad y lealtad inquebrantable. Con su mirada tierna y su carácter " +
-                "amigable, Lolita se gana el corazón de todos los que tienen el placer de" +
-                " conocerla. Esta adorable mascota está lista para encontrar un lugar especial " +
-                "en tu vida y llenar tu hogar de amor y alegría. ¡No pierdas la oportunidad de" +
-                " darle a Lolita el hogar amoroso que se merece! Si estás listo para abrir tu" +
-                " corazón y tu hogar a esta maravillosa compañera, contáctanos hoy mismo para" +
-                " conocer más sobre cómo puedes adoptar a Lolita y hacerla parte de tu familia" +
-                " para siempre. ¡Lolita te espera con los brazos abiertos para compartir " +
-                "momentos inolvidables juntos!",
+        description = "¡Meet Lolita, the lovely pet who is looking for a forever home! " +
+                "Lolita is a faithful companion who has captivated everyone with her sweet " +
+                "personality and unwavering loyalty. With her tender gaze and friendly nature," +
+                " Lolita wins the hearts of all who have the pleasure of meeting her. This" +
+                " adorable pet is ready to find a special place in your life and fill your " +
+                "home with love and joy. Don't miss your chance to give Lolita the loving " +
+                "home she deserves! If you're ready to open your heart and home to this " +
+                "wonderful companion, contact us today to learn more about how you can " +
+                "adopt Lolita and make her a part of your forever family. Lolita is " +
+                "waiting for you with open arms to share unforgettable moments together.",
         latitude = 3.338658,
         longitude = -76.5494643
     ),
@@ -39,12 +38,11 @@ val pets = listOf(
         name = "Simba",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651693211.jpg",
         tag = "Playful pet",
-        description = "¡Descubre a Simba, la mascota que iluminará tu vida con su energía" +
-                " juguetona y su personalidad encantadora! Simba es un compañero leal que" +
-                " siempre está listo para explorar el mundo contigo y compartir momentos " +
-                "llenos de diversión y aventura. Su espíritu juguetón y su amor por la vida" +
-                " hacen que cada día sea una nueva aventura. ¿Estás listo para embarcarte " +
-                "en un viaje emocionante junto a Simba?"
+        description = "¡Discover Simba, the pet that will brighten your life with his playful" +
+                " energy and charming personality! Simba is a loyal companion who is always" +
+                " ready to explore the world with you and share moments full of fun and " +
+                "adventure. His playful spirit and love of life make every day a new " +
+                "adventure. Are you ready to embark on an exciting journey with Simba?"
         ,
         latitude = 3.3950644,
         longitude = -76.525664
@@ -54,11 +52,11 @@ val pets = listOf(
         name = "Rayo",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651691628.jpg",
         tag = "Faithful pet",
-        description = "¡Conoce a Rayo, la mascota llena de energía que te robará el corazón " +
-                "con su carácter enérgico y su vitalidad contagiosa! Rayo es un compañero lleno " +
-                "de alegría que siempre está listo para animarte con su entusiasmo y amor " +
-                "incondicional. Si buscas un compañero activo y divertido para compartir tus " +
-                "días, ¡Rayo es la elección perfecta!"
+        description = "¡Meet Rayo, the energetic mascot who will steal your heart with his" +
+                " energetic character and contagious vitality! Rayo is a joy-filled companion" +
+                " who is always ready to cheer you up with his enthusiasm and unconditional" +
+                " love. If you are looking for an active and fun companion to share your days" +
+                " with, Rayo is the perfect choice!!"
         ,
         latitude = 3.3697814,
         longitude = -76.53704
@@ -68,12 +66,13 @@ val pets = listOf(
         name = "Toby",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651688168.jpg",
         tag = "Energy mascot",
-        description = "¡Conoce a Toby, el fiel compañero que hará que cada día sea especial " +
-                "con su afecto y devoción incondicional! Toby es un amigo leal que estará a" +
-                " tu lado en cada momento, brindándote amor y compañía sin igual. Con su " +
-                "naturaleza cariñosa y su dulce temperamento, Toby iluminará tu vida y llenará " +
-                "tu hogar de amor y felicidad. ¿Estás listo para recibir a Toby en tu vida y " +
-                "hacerlo parte de tu familia?"
+        description = "¡Meet Toby, the faithful companion who will make every day special" +
+                " with his unconditional affection and devotion. Toby is a loyal friend" +
+                " who will be by your side every step of the way, providing you with" +
+                " unparalleled love and companionship. With his loving nature and sweet" +
+                " temperament, Toby will brighten your life and fill your home with love" +
+                " and happiness. Are you ready to welcome Toby into your life and make" +
+                " him part of your family?"
         ,
         latitude = 3.4100706,
         longitude = -76.5621871
@@ -83,12 +82,12 @@ val pets = listOf(
         name = "Chispa",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651689459.jpg",
         tag = "Pet friendly",
-        description = "¡Descubre a Chispa, la mascota que te robará el corazón con su" +
-                " encanto y carisma irresistible! Chispa es un compañero cariñoso que siempre" +
-                " está listo para compartir su amor y alegría contigo. Con su personalidad " +
-                "amigable y su actitud positiva, Chispa hará que cada día sea especial y " +
-                "llenará tu hogar de amor y felicidad. ¡Prepárate para enamorarte de Chispa " +
-                "y hacerla parte de tu familia para siempre!"
+        description = "¡Discover Chispa, the pet that will steal your heart with his" +
+                " charm and irresistible charisma. Chispa is a loving companion who" +
+                " is always ready to share his love and joy with you. With her friendly " +
+                "personality and positive attitude, Chispa will make every day special" +
+                " and fill your home with love and happiness. Get ready to fall in love" +
+                " with Chispa and make her part of your family forever!!"
         ,
         latitude = 3.4091105,
         longitude = -76.5797172
@@ -98,13 +97,12 @@ val pets = listOf(
         name = "Luna",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651275948.jpg",
         tag = "Protective pet",
-        description = "¡Conoce a Luna, la mascota que te acompañará en cada momento con" +
-                " su ternura y su espíritu protector! Luna es una compañera leal que " +
-                "siempre estará a tu lado, brindándote amor y apoyo en todo momento. Con " +
-                "su mirada tierna y su corazón bondadoso, Luna iluminará tu vida y te " +
-                "recordará el verdadero significado del amor incondicional. ¿Estás listo " +
-                "para abrir tu corazón y tu hogar a Luna y hacerla parte de tu familia " +
-                "para siempre?"
+        description = "¡Meet Luna, the pet that will accompany you at every moment with" +
+                " her tenderness and protective spirit. Luna is a loyal companion who will" +
+                " always be by your side, giving you love and support at all times. With" +
+                " her tender gaze and kind heart, Luna will brighten your life and remind " +
+                "you of the true meaning of unconditional love. Are you ready to open your" +
+                " heart and home to Luna and make her part of your family forever?!"
         ,
         latitude = 3.4487506,
         longitude = -76.541014
@@ -114,12 +112,12 @@ val pets = listOf(
         name = "Coco",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651692429.jpg",
         tag = "Smart pet",
-        description = "¡Descubre a Coco, la mascota inteligente y astuta que te sorprenderá con" +
-                " su ingenio y su carácter perspicaz! Coco es un compañero curioso que siempre " +
-                "está listo para explorar el mundo y descubrir nuevas aventuras contigo. Con su " +
-                "mente aguda y su personalidad encantadora, Coco hará que cada día sea emocionante" +
-                " y lleno de diversión. ¡Prepárate para compartir momentos inolvidables junto " +
-                "a Coco y hacerla parte de tu vida para siempre!",
+        description = "¡Discover Coco, the smart and clever pet that will surprise you with" +
+                " his wit and insightful character. Coco is a curious companion who is " +
+                "always ready to explore the world and discover new adventures with you. " +
+                "With her sharp mind and charming personality, Coco will make every day " +
+                "exciting and full of fun. Get ready to share unforgettable moments together" +
+                " with Coco and make her part of your life forever!!",
         latitude = 4.7986924,
         longitude = -75.29124
     ),
@@ -128,12 +126,13 @@ val pets = listOf(
         name = "Max",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651689262.jpg",
         tag = "Obedient pet",
-        description = "¡Conoce a Max, el compañero obediente y leal que te acompañará en " +
-                "cada paso del camino con su afecto y devoción incondicional! Max es un amigo" +
-                " fiel que siempre estará a tu lado, brindándote amor y compañía en los buenos" +
-                " y malos momentos. Con su naturaleza cariñosa y su corazón bondadoso, Max hará" +
-                " que cada día sea especial y llenará tu hogar de amor y felicidad. ¡Prepárate" +
-                " para recibir a Max en tu vida y hacerlo parte de tu familia para siempre!"
+        description = "¡Meet Max, the obedient and loyal companion who will accompany you" +
+                " every step of the way with his unconditional affection and devotion. Max" +
+                " is a faithful friend who will always be by your side, giving you love" +
+                " and companionship in good times and bad. With his affectionate nature" +
+                " and kind heart, Max will make every day special and fill your home with" +
+                " love and happiness. Get ready to welcome Max into your life and make " +
+                "him part of your family forever!!"
         ,
         latitude = 3.4744071,
         longitude = -76.4833757
@@ -143,12 +142,12 @@ val pets = listOf(
         name = "Oreo",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651692356.jpg",
         tag = "Loving pet",
-        description = "¡Descubre a Oreo, la mascota amorosa y cariñosa que te conquistará" +
-                " con su ternura y su dulzura inigualable! Oreo es un compañero afectuoso " +
-                "que siempre está listo para compartir su amor y afecto contigo. Con su " +
-                "naturaleza tierna y su corazón bondadoso, Oreo hará que cada día sea especial" +
-                " y llenará tu hogar de amor y felicidad. ¡Prepárate para enamorarte de Oreo" +
-                " y hacerlo parte de tu familia para siempre!"
+        description = "¡Discover Oreo, the loving and affectionate pet that will win you over" +
+                " with his tenderness and unmatched sweetness. Oreo is an affectionate " +
+                "companion who is always ready to share his love and affection with you. " +
+                "With his tender nature and kind heart, Oreo will make every day special " +
+                "and fill your home with love and happiness. Get ready to fall in love with " +
+                "Oreo and make him part of your family forever!!"
         ,
         latitude = 3.4896294,
         longitude = -76.5432513
@@ -158,13 +157,12 @@ val pets = listOf(
         name = "Zoe",
         image_url = "https://www.fundacionanimalove.org/images/productos/1_1651682963.jpg",
         tag = "Agile pet",
-        description = "¡Conoce a Zoe, la mascota ágil y juguetona que te sorprenderá con su" +
-                " vitalidad y su espíritu aventurero! Zoe es una compañera llena de energía " +
-                "que siempre está lista para explorar el mundo contigo y disfrutar de nuevas " +
-                "experiencias. Con su entusiasmo contagioso y su personalidad encantadora, " +
-                "Zoe hará que cada día sea emocionante y lleno de diversión. ¡Prepárate para " +
-                "compartir momentos inolvidables junto a Zoe y hacerla parte de tu vida " +
-                "para siempre!"
+        description = "¡Meet Zoe, the agile and playful pet that will surprise you with" +
+                " her vitality and adventurous spirit. Zoe is an energetic companion who " +
+                "is always ready to explore the world with you and enjoy new experiences." +
+                " With her contagious enthusiasm and charming personality, Zoe will make" +
+                " every day exciting and fun-filled, so get ready to share unforgettable " +
+                "moments with Zoe and make her a part of your life forever!!"
         ,
         latitude = 3.4691669,
         longitude = -76.4957139
