@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 fun ToolBar() {
     Spacer(
         modifier = Modifier
-            .height(80.dp)
+            .height(100.dp)
             .fillMaxWidth()
             .background(
                 Brush
