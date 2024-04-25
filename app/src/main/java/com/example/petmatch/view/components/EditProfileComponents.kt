@@ -149,7 +149,7 @@ fun GenderEditDropdown(
                     onGenderSelected("Male")
                     isExpanded = false
                 }
-            )
+            ) 
             DropdownMenuItem(
                 text = {
                     Text(text = "Female")
