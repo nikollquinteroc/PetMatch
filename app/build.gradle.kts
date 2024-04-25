@@ -74,9 +74,11 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended:1.6.5")
     implementation ("org.mindrot:jbcrypt:0.4")
-    implementation("com.google.firebase:firebase-auth")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
-    //Map
+    implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.firebase:firebase-storage-ktx:20.0.0")
     implementation(libs.google.maps)
     implementation(libs.google.play.services)
     implementation(libs.google.play.services.location)

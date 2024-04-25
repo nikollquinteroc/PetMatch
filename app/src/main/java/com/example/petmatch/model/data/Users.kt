@@ -1,7 +1,7 @@
 package com.example.petmatch.model.data
 
 data class Users(
-    val id: String? = null,
+    var id: String? = null,
     val email: String? = null,
     val firstName: String? = null,
     val gender: String? = null,

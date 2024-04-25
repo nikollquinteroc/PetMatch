@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import com.example.petmatch.model.data.ProfileViewModel
 import com.example.petmatch.view.screens.home.map.MapViewModel
 import com.example.petmatch.view.screens.home.profile.DetailsUserScreen
 import com.example.petmatch.view.ui_theme.MyApp
@@ -42,17 +43,26 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val viewModel: MapViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         askPermissions()
+
+        profileViewModel.loadUserProfile()
         setContent {
             MyApp {
-               // PetMatchApp(viewModel.locationState.value)
-                DetailsUserScreen()
+               //PetMatchApp(viewModel.locationState.value)
+                DetailsUserScreen(
+                    upPress = {  },
+                    onNavigateToRoute = { route ->},
+                    profileViewModel = profileViewModel
+                )
+
             }
         }
     }
+
 }
 
