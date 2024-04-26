@@ -1,4 +1,4 @@
-package com.example.petmatch.view.screens
+package com.example.petmatch.view.screens.register.termsAndConditions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize

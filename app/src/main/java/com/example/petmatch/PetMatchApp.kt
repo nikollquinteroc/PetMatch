@@ -47,7 +47,7 @@ private fun NavGraphBuilder.petMatchNavGraph(
     lastKnownLocation: Location?
 ) {
     composable(route = MainDestinations.LOGIN_ROUTE) {
-        LoginScreen(onNavigateToRoute)
+        LoginScreen()
     }
     navigation(
         route = MainDestinations.HOME_ROUTE,

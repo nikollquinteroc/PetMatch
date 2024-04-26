@@ -17,10 +17,8 @@ import com.example.petmatch.model.data.SignUpViewModel
 import com.example.petmatch.view.components.ButtonComponent
 import com.example.petmatch.view.components.HeadingTextComponent
 
-
-
 @Composable
-fun HomeScreen(signUpViewModel: SignUpViewModel = viewModel()){
+fun HomeScreen(signUpViewModel: SignUpViewModel = viewModel()) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -31,23 +29,20 @@ fun HomeScreen(signUpViewModel: SignUpViewModel = viewModel()){
 
             HeadingTextComponent(value = stringResource(R.string.home))
 
-            ButtonComponent(value = stringResource(id = R.string.logout), onButtonClicked = {
-                signUpViewModel.logout()
-            },
-            isEnabled = true)
+            ButtonComponent(
+                value = stringResource(id = R.string.logout), onButtonClicked = {
+                    signUpViewModel.logout()
+                },
+                isEnabled = true
+            )
 
         }
-
     }
-
 }
-
-
-
 
 @Preview
 @Composable
-fun HomeScreenPreview(){
+fun HomeScreenPreview() {
     HomeScreen()
 }
 

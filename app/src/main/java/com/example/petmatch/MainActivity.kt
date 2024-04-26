@@ -46,7 +46,8 @@ class MainActivity : ComponentActivity() {
         askPermissions()
         setContent {
             MyApp {
-                PetMatchApp(viewModel.locationState.value)
+                //PetMatchApp(viewModel.locationState.value)
+                PostOfficeApp()
             }
         }
     }

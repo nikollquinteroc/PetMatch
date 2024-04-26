@@ -1,4 +1,4 @@
-package com.example.petmatch.view.App
+package com.example.petmatch
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import com.example.petmatch.view.screens.login.LoginScreen
 import com.example.petmatch.view.screens.register.SignUpScreen
 import com.example.petmatch.view.navigation.PostOfficeAppRouter
 import com.example.petmatch.view.navigation.Screen
-import com.example.petmatch.view.screens.TermsAndConditionsScreen
+import com.example.petmatch.view.screens.register.termsAndConditions.TermsAndConditionsScreen
 import com.example.petmatch.view.screens.home.HomeScreen
 
 
