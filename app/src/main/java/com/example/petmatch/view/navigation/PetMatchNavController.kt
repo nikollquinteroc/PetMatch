@@ -16,6 +16,7 @@ import com.example.petmatch.view.screens.home.HomeSections
 object MainDestinations {
     const val LOGIN_ROUTE = "login"
     const val REGISTER_ADOPTER_ROUTE = "register_adopter"
+    const val TERMS_AND_CONDITIONS = "terms_and_conditions"
     const val HOME_ROUTE = "home"
     const val PET_DETAIL_ROUTE = "pet"
     const val LATITUDE = "latitude"

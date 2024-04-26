@@ -22,6 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.example.petmatch.R
 import com.example.petmatch.view.components.HeadingTextComponent
 import com.example.petmatch.view.components.MyTextFieldComponent
@@ -30,19 +32,38 @@ import com.example.petmatch.model.data.rules.LoginUIEvent
 import com.example.petmatch.view.components.ButtonComponent
 import com.example.petmatch.view.components.ClickableLoginTextComponent
 import com.example.petmatch.view.components.DividerTextComponent
-import com.example.petmatch.view.components.HeadingTextComponent
-import com.example.petmatch.view.components.MyTextFieldComponent
 import com.example.petmatch.view.components.NormalTextComponent
 import com.example.petmatch.view.components.PasswordTextFieldComponent
 import com.example.petmatch.view.components.UnderLinedTextComponent
+import com.example.petmatch.view.navigation.MainDestinations
 import com.example.petmatch.view.navigation.PostOfficeAppRouter
 import com.example.petmatch.view.navigation.Screen
 import com.example.petmatch.view.navigation.SystemBackButtonHandler
+import com.example.petmatch.view.screens.register.SignUpScreen
+import com.example.petmatch.view.screens.register.termsAndConditions.TermsAndConditionsScreen
 import com.example.petmatch.view.ui_theme.MyApp
 
+fun NavGraphBuilder.loginGraph(
+    onNavigateToRoute: (String) -> Unit
+) {
+    composable(MainDestinations.LOGIN_ROUTE) {
+        LoginScreen(onLoginSuccess = {
+            onNavigateToRoute(MainDestinations.HOME_ROUTE)
+        })
+    }
+    composable(MainDestinations.REGISTER_ADOPTER_ROUTE) {
+        SignUpScreen()
+    }
+    composable(MainDestinations.TERMS_AND_CONDITIONS) {
+        TermsAndConditionsScreen()
+    }
+}
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(
+    loginViewModel: LoginViewModel = viewModel(),
+    onLoginSuccess: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -136,12 +157,13 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
     SystemBackButtonHandler {
         PostOfficeAppRouter.navigateTo(Screen.SignUpScreen)
     }
+    onLoginSuccess()
 }
 
 @Preview
 @Composable
 fun LoginScreenPreview() {
     MyApp {
-        LoginScreen()
+        LoginScreen(onLoginSuccess = {})
     }
 }

@@ -15,6 +15,7 @@ import com.example.petmatch.view.screens.contact.InfoContact
 import com.example.petmatch.view.screens.home.HomeSections
 import com.example.petmatch.view.screens.home.addHomeGraph
 import com.example.petmatch.view.screens.login.LoginScreen
+import com.example.petmatch.view.screens.login.loginGraph
 import com.example.petmatch.view.screens.petdetail.PetDetail
 
 
@@ -46,8 +47,12 @@ private fun NavGraphBuilder.petMatchNavGraph(
     onNavigateToRoute: (String) -> Unit,
     lastKnownLocation: Location?
 ) {
-    composable(route = MainDestinations.LOGIN_ROUTE) {
-        LoginScreen()
+
+    navigation(
+        route = MainDestinations.LOGIN_ROUTE,
+        startDestination = MainDestinations.LOGIN_ROUTE
+    ) {
+        loginGraph(onNavigateToRoute)
     }
     navigation(
         route = MainDestinations.HOME_ROUTE,

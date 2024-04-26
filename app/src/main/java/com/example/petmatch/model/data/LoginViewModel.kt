@@ -63,9 +63,6 @@ class LoginViewModel : ViewModel() {
         )
 
         allValidationsPassed.value = emailResult.status && passwordResult.status
-
-
-
     }
 
     private fun login() {

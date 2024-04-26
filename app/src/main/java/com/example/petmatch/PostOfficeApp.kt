@@ -29,7 +29,7 @@ fun PostOfficeApp() {
                     TermsAndConditionsScreen()
                 }
                 is Screen.LoginScreen -> {
-                    LoginScreen()
+                    LoginScreen(onLoginSuccess = {})
                 }
                 is Screen.HomeScreen -> {
                     HomeScreen()
