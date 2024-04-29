@@ -1,5 +1,6 @@
 package com.example.petmatch.view.screens.home.profile
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,11 +15,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import com.example.petmatch.R
+import com.example.petmatch.model.data.SignUpViewModel
+import com.example.petmatch.view.components.ButtonComponent
 import com.example.petmatch.view.components.CircularImagePicker
 import com.example.petmatch.view.components.GenderEditDropdown
 import com.example.petmatch.view.components.MyTextFieldComponent
 import com.example.petmatch.view.components.PetMatchSurface
+import com.example.petmatch.view.components.ToolBar
 import com.example.petmatch.view.screens.home.HomeSections
 import com.example.petmatch.view.screens.home.PetMatchBottomBar
 import com.example.petmatch.view.ui_theme.MyApp
@@ -26,7 +32,8 @@ import com.example.petmatch.view.ui_theme.MyApp
 @Composable
 fun Profile(
     onNavigateToRoute: (String) -> Unit,
-    modifier: Modifier = Modifier
+    signUpViewModel: SignUpViewModel = viewModel(),
+    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ){
     Scaffold(
         bottomBar = {
@@ -35,6 +42,7 @@ fun Profile(
                 currentRoute = HomeSections.PROFILE.route,
                 navigateToRoute = onNavigateToRoute)
         },
+        topBar = { ToolBar() },
         modifier = modifier
     ) { paddingValues ->
         PetMatchSurface(
@@ -47,7 +55,6 @@ fun Profile(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(20.dp))
                 CircularImagePicker()
                 Spacer(modifier = Modifier.height(20.dp))
                 MyTextFieldComponent(
@@ -56,7 +63,6 @@ fun Profile(
                     initialValue = "Nikoll"
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-
                 MyTextFieldComponent(
                     labelValue = stringResource(id = R.string.last),
                     painterResource = painterResource(id = R.drawable.profile),
@@ -64,15 +70,23 @@ fun Profile(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 GenderEditDropdown()
+                Spacer(modifier = Modifier.height(20.dp))
+                ButtonComponent(
+                    value = stringResource(id = R.string.logout),
+                    onButtonClicked = {
+                        signUpViewModel.logout()
+                    },
+                    isEnabled = true
+                )
             }
         }
     }
 }
 
-@Preview
-@Composable
-fun ProfilePreview() {
-    MyApp {
-        Profile(onNavigateToRoute = {})
-    }
-}
+//@Preview
+//@Composable
+//fun ProfilePreview() {
+//    MyApp {
+//        Profile(onNavigateToRoute = {}, onNavigateToLogin = {})
+//    }
+//}

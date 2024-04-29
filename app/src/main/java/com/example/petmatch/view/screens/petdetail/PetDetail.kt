@@ -1,5 +1,6 @@
 package com.example.petmatch.view.screens.petdetail
 
+import android.content.res.Configuration
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +36,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -50,6 +52,7 @@ import com.example.petmatch.view.components.PetMatchButton
 import com.example.petmatch.view.components.PetMatchDivider
 import com.example.petmatch.view.components.PetMatchSurface
 import com.example.petmatch.view.components.Up
+import com.example.petmatch.view.ui_theme.PetMatchTheme
 import kotlin.math.max
 import kotlin.math.min
 
@@ -85,7 +88,7 @@ fun PetDetail(
             pet = petFromRepo,
             related = related,
             scroll = scroll,
-            onPetSelectFromDetailScreen= onPetSelectFromDetailScreen
+            onPetSelectFromDetailScreen = onPetSelectFromDetailScreen
         )
         Title(pet = petFromRepo) { scroll.value }
         Image(imageUrl = petFromRepo.image_url) { scroll.value }
@@ -356,7 +359,9 @@ private fun DetailBottomBarItem(
 //        PetDetail(
 //            petId = 1L,
 //            upPress = { },
-//            onNavigateToRoute = {}
+//            onViewPetOnMapScreen = {},
+//            onAdoptPet = {},
+//            onPetSelectFromDetailScreen =
 //        )
 //    }
 //}

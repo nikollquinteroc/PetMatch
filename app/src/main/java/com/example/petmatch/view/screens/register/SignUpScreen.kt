@@ -38,7 +38,8 @@ import com.example.petmatch.view.ui_theme.MyApp
 
 @Composable
 fun SignUpScreen(
-    signUpViewModel: SignUpViewModel = viewModel()
+    signUpViewModel: SignUpViewModel = viewModel(),
+    onNavigateToLogin: (String) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -140,7 +141,7 @@ fun SignUpScreen(
                         signUpViewModel.onEvent(SignUpUIEvent.PrivacyPolicyCheckBoxClicked(it))
                     }
                 )
-                Spacer(modifier = Modifier.height(70.dp))
+                Spacer(modifier = Modifier.height(30.dp))
                 ButtonComponent(
                     value = stringResource(id = R.string.register),
                     onButtonClicked = {
@@ -151,9 +152,7 @@ fun SignUpScreen(
                 DividerTextComponent()
                 ClickableLoginTextComponent(
                     tryingToLogin = true,
-                    onTextSelected = {
-                        PostOfficeAppRouter.navigateTo(Screen.LoginScreen)
-                    }
+                    onTextSelected = { onNavigateToLogin(it) }
                 )
             }
         }
@@ -168,6 +167,6 @@ fun SignUpScreen(
 @Composable
 fun DefaultPreviewOfSignUpScreen() {
     MyApp {
-        SignUpScreen()
+        SignUpScreen(onNavigateToLogin = {})
     }
 }

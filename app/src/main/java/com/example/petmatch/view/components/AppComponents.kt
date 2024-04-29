@@ -328,14 +328,12 @@ fun DividerTextComponent() {
             color = MaterialTheme.colorScheme.tertiary,
             thickness = 2.dp
         )
-
         Text(
             modifier = Modifier.padding(8.dp),
             text = stringResource(id = R.string.or),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary
         )
-
         PetMatchDivider(
             modifier = Modifier
                 .fillMaxWidth()
@@ -343,7 +341,6 @@ fun DividerTextComponent() {
             color = MaterialTheme.colorScheme.tertiary,
             thickness = 2.dp
         )
-
     }
 }
 
@@ -361,7 +358,6 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (
             pop()
         }
     }
-
     ClickableText(
         modifier = Modifier
             .fillMaxWidth()

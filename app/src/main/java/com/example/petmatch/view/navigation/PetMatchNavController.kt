@@ -39,9 +39,7 @@ class PetMatchNavController(
     private val currentRoute: String?
         get() = navController.currentDestination?.route
 
-    fun
-
-            upPress() {
+    fun upPress() {
         navController.navigateUp()
     }
 
@@ -56,6 +54,18 @@ class PetMatchNavController(
                     saveState = true
                 }
             }
+        }
+    }
+
+    fun navigateToRegister(route: String, from: NavBackStackEntry) {
+        if (from.lifecycleIsResumed()) {
+            navController.navigate(MainDestinations.REGISTER_ADOPTER_ROUTE)
+        }
+    }
+
+    fun navigateToLogin(route: String, from: NavBackStackEntry) {
+        if (from.lifecycleIsResumed()) {
+            navController.navigate(MainDestinations.LOGIN_ROUTE)
         }
     }
 

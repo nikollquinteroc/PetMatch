@@ -6,12 +6,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.petmatch.view.screens.login.LoginScreen
-import com.example.petmatch.view.screens.register.SignUpScreen
 import com.example.petmatch.view.navigation.PostOfficeAppRouter
 import com.example.petmatch.view.navigation.Screen
-import com.example.petmatch.view.screens.register.termsAndConditions.TermsAndConditionsScreen
+import com.example.petmatch.view.screens.login.LoginScreen
+import com.example.petmatch.view.screens.register.SignUpScreen
+
+
 import com.example.petmatch.view.screens.home.HomeScreen
+import com.example.petmatch.view.screens.register.termsAndConditions.TermsAndConditionsScreen
 
 
 @Composable
@@ -23,13 +25,13 @@ fun PostOfficeApp() {
         Crossfade(targetState = PostOfficeAppRouter.currentScreen) { currentState ->
             when (currentState.value) {
                 is Screen.SignUpScreen -> {
-                    SignUpScreen()
+                    SignUpScreen(onNavigateToLogin = {})
                 }
                 is Screen.TermsAndConditionsScreen -> {
                     TermsAndConditionsScreen()
                 }
                 is Screen.LoginScreen -> {
-                    LoginScreen(onLoginSuccess = {})
+                    LoginScreen(onLoginSuccess = {}, onNavigateToRegister = {})
                 }
                 is Screen.HomeScreen -> {
                     HomeScreen()

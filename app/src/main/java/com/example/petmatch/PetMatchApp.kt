@@ -15,8 +15,9 @@ import com.example.petmatch.view.screens.contact.InfoContact
 import com.example.petmatch.view.screens.home.HomeSections
 import com.example.petmatch.view.screens.home.addHomeGraph
 import com.example.petmatch.view.screens.login.LoginScreen
-import com.example.petmatch.view.screens.login.loginGraph
 import com.example.petmatch.view.screens.petdetail.PetDetail
+import com.example.petmatch.view.screens.register.SignUpScreen
+import com.example.petmatch.view.screens.register.termsAndConditions.TermsAndConditionsScreen
 
 
 @Composable
@@ -33,6 +34,8 @@ fun PetMatchApp(lastKnownLocation: Location?) {
             onAdoptPet = petMatchNavController::navigateToAdoptPetFromDetailScreen,
             upPress = petMatchNavController::upPress,
             onNavigateToRoute = petMatchNavController::navigateToBottomBarRoute,
+            onNavigateToRegister = petMatchNavController::navigateToRegister,
+            onNavigateToLogin = petMatchNavController::navigateToLogin,
             lastKnownLocation = lastKnownLocation
         )
     }
@@ -45,14 +48,23 @@ private fun NavGraphBuilder.petMatchNavGraph(
     onAdoptPet: (Long, NavBackStackEntry) -> Unit,
     upPress: () -> Unit,
     onNavigateToRoute: (String) -> Unit,
+    onNavigateToRegister: (String, NavBackStackEntry) -> Unit,
+    onNavigateToLogin: (String, NavBackStackEntry) -> Unit,
     lastKnownLocation: Location?
 ) {
-
-    navigation(
-        route = MainDestinations.LOGIN_ROUTE,
-        startDestination = MainDestinations.LOGIN_ROUTE
-    ) {
-        loginGraph(onNavigateToRoute)
+    composable(MainDestinations.LOGIN_ROUTE) { from ->
+        LoginScreen(
+            onLoginSuccess = {
+                onNavigateToRoute(MainDestinations.HOME_ROUTE)
+            },
+            onNavigateToRegister = { route -> onNavigateToRegister(route, from) }
+        )
+    }
+    composable(MainDestinations.REGISTER_ADOPTER_ROUTE) { from ->
+        SignUpScreen(onNavigateToLogin = { route -> onNavigateToLogin(route, from) })
+    }
+    composable(MainDestinations.TERMS_AND_CONDITIONS) {
+        TermsAndConditionsScreen()
     }
     navigation(
         route = MainDestinations.HOME_ROUTE,
@@ -77,7 +89,7 @@ private fun NavGraphBuilder.petMatchNavGraph(
             upPress = upPress,
             onViewPetOnMapScreen = onViewPetOnMapScreen,
             onAdoptPet = onAdoptPet,
-            onPetSelectFromDetailScreen =  { id -> onPetSelectFromDetailScreen(id, backStackEntry) }
+            onPetSelectFromDetailScreen = { id -> onPetSelectFromDetailScreen(id, backStackEntry) }
         )
     }
     composable(route = MainDestinations.INFO_CONTACT_ROUTE) {
